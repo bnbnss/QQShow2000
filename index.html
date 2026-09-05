@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>QQ秀2000</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        body {
+            font-family: 'SimHei', 'Microsoft YaHei', sans-serif;
+            font-size: 11px;
+            background: #C0D6E8;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .window {
+            width: 265px;
+            height: 475px;
+            background: #E8EEF4;
+            border: 3px solid #0044AA;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .titlebar {
+            background: linear-gradient(180deg, #99CCFF 0%, #3399FF 30%, #0066CC 100%);
+            padding: 3px 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 2px solid #BBDDFF;
+            border-left: 2px solid #BBDDFF;
+            border-bottom: 2px solid #003388;
+            border-right: 2px solid #003388;
+            flex-shrink: 0;
+        }
+        .titlebar-left { display: flex; align-items: center; gap: 4px; }
+        .titlebar-icon { width: 16px; height: 16px; image-rendering: pixelated; }
+        .titlebar-text { color: #FFF; font-size: 12px; font-weight: bold; text-shadow: 1px 1px 0 rgba(0,0,0,0.3); }
+        .titlebar-btns { display: flex; gap: 3px; }
+        .titlebar-btn {
+            width: 22px; height: 22px;
+            background: linear-gradient(180deg, #E8F0FF 0%, #C0D8F0 50%, #A0C0E0 100%);
+            border-top: 2px solid #FFF;
+            border-left: 2px solid #FFF;
+            border-bottom: 2px solid #003388;
+            border-right: 2px solid #003388;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; color: #0044AA;
+        }
+        .control-bar {
+            padding: 2px 6px 1px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .gender-tabs { display: flex; gap: 2px; }
+        .gender-tab {
+            padding: 3px 8px 4px;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px 4px 0 0;
+            border-top: 2px solid #FFF;
+            border-left: 2px solid #FFF;
+            border-bottom: 2px solid #003388;
+            border-right: 2px solid #003388;
+        }
+        .gender-tab.active {
+            background: linear-gradient(180deg, #E8F4FF 0%, #B8D8F0 50%, #90C0E0 100%);
+            color: #000;
+            border-bottom-color: #E8EEF4;
+            margin-bottom: -2px;
+            z-index: 2;
+            position: relative;
+        }
+        .gender-tab:not(.active) {
+            background: linear-gradient(180deg, #E0E8F0 0%, #C0D0E0 50%, #A0B8D0 100%);
+            color: #333;
+            z-index: 1;
+            position: relative;
+        }
+        .random-btn {
+            padding: 4px 10px;
+            background: linear-gradient(180deg, #FFE866 0%, #FFCC00 50%, #FF9900 100%);
+            border-top: 2px solid #FFE866;
+            border-left: 2px solid #FFE866;
+            border-bottom: 2px solid #CC7700;
+            border-right: 2px solid #CC7700;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: bold;
+            color: #FFF;
+            cursor: pointer;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+        }
+        .preview-frame {
+            margin: 0 6px;
+            background: #FFF;
+            border: 2px solid #0044AA;
+            border-radius: 4px;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .qq-show-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .qq-show-layer img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center bottom;
+        }
+        .category-bar {
+            padding: 2px 6px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .category-tab {
+            padding: 3px 5px 3px;
+            text-align: center;
+            border-radius: 3px;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            border-top: 2px solid #FFF;
+            border-left: 2px solid #FFF;
+            border-bottom: 2px solid #003388;
+            border-right: 2px solid #003388;
+            white-space: nowrap;
+        }
+        .category-tab.active {
+            background: linear-gradient(180deg, #3399FF 0%, #0066CC 50%, #0044AA 100%);
+            color: #FFF;
+        }
+        .category-tab:not(.active) {
+            background: linear-gradient(180deg, #F8F8F8 0%, #E0E0E0 50%, #C8C8C8 100%);
+            color: #333;
+        }
+        .item-panel {
+            margin: 0 6px 4px;
+            border: 2px solid #0044AA;
+            border-radius: 0 0 4px 4px;
+            overflow: hidden;
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .panel-header {
+            background: linear-gradient(180deg, #99CCFF 0%, #3399FF 30%, #0066CC 100%);
+            padding: 2px 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 2px solid #BBDDFF;
+            border-left: 2px solid #BBDDFF;
+            border-bottom: 2px solid #003388;
+            border-right: 2px solid #003388;
+            flex-shrink: 0;
+        }
+        .panel-title-group { display: flex; flex-direction: column; gap: 0; }
+        .panel-title { color: #FFF; font-size: 11px; font-weight: bold; }
+        .panel-subtitle { color: #E0F0FF; font-size: 8px; }
+        .clear-btn {
+            padding: 2px 6px;
+            background: linear-gradient(180deg, #E8F0FF 0%, #C0D8F0 50%, #A0C0E0 100%);
+            border-top: 2px solid #FFF;
+            border-left: 2px solid #FFF;
+            border-bottom: 2px solid #003388;
+            border-right: 2px solid #003388;
+            border-radius: 3px;
+            font-family: inherit;
+            font-size: 9px;
+            cursor: pointer;
+            display: flex; align-items: center; gap: 2px;
+        }
+        .panel-body {
+            background: #FFF;
+            padding: 3px;
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .panel-body::-webkit-scrollbar { width: 6px; }
+        .panel-body::-webkit-scrollbar-track { background: #E0E8F0; border-radius: 2px; }
+        .panel-body::-webkit-scrollbar-thumb { background: #3399FF; border-radius: 2px; }
+        .item-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .item-card {
+            min-width: 56px;
+            width: 56px;
+            background: #FFF;
+            border: 2px solid #0044AA;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .item-card:hover { border-color: #3399FF; }
+        .item-card.active { border-color: #FF9900; }
+        .item-card .thumb {
+            width: 100%;
+            height: 56px;
+            overflow: hidden;
+            background: #FFF;
+        }
+        .item-card .thumb img {
+            width: 100%; height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        .item-card .label {
+            width: 100%;
+            padding: 2px 1px;
+            text-align: center;
+            font-size: 9px;
+            color: #333;
+            background: #F0F4F8;
+            border-top: 1px solid #D0D8E0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .item-card.active .label {
+            background: linear-gradient(180deg, #FFD700 0%, #FF9900 100%);
+            color: #FFF;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="titlebar">
+            <div class="titlebar-left">
+                <img class="titlebar-icon" src="assets/icons/qqshow_icon.PNG" onerror="this.style.display='none'">
+                <span class="titlebar-text">QQ秀2000</span>
+            </div>
+            <div class="titlebar-btns">
+                <button class="titlebar-btn" onclick="location.reload()">&#x21BB;</button>
+                <button class="titlebar-btn">&#x2919;</button>
+            </div>
+        </div>
+        <div class="control-bar">
+            <div class="gender-tabs">
+                <button class="gender-tab active" data-gender="female">&#9792; 女生</button>
+                <button class="gender-tab" data-gender="male">&#9794; 男生</button>
+            </div>
+            <button class="random-btn" onclick="window._doRandom()">&#x968F;&#x673A;&#x642D;&#x914D;</button>
+        </div>
+        <div class="preview-frame" id="previewFrame"></div>
+        <div class="category-bar" id="categoryBar"></div>
+        <div class="item-panel">
+            <div class="panel-header">
+                <div class="panel-title-group">
+                    <span class="panel-title" id="panelTitle"></span>
+                    <span class="panel-subtitle" id="panelSubtitle"></span>
+                </div>
+                <button class="clear-btn" onclick="window._doClear()">&#x1F5D1; &#x6E05;&#x7A7A;</button>
+            </div>
+            <div class="panel-body">
+                <div class="item-grid" id="itemGrid"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var fs = require('fs');
+        var path = require('path');
+
+        var LAYER_ORDER = {
+            'backgrounds': 0,
+            'background-decor': 1,
+            'vehicle': 2,
+            'wings': 3,
+            'back-hair': 4,
+            'bottom': 5,
+            'top': 7,
+            'outfit': 8,
+            'makeup': 9,
+            'head-set': 10,
+            'front-hair': 11,
+            'neckwear': 11,
+            'earrings': 12,
+            'face-decor': 13,
+            'glasses': 14,
+            'headwear': 15,
+            'other-accessories': 16,
+            'frame': 17,
+            'text': 18,
+            'companion': 19,
+            'sparkle': 20
+        };
+
+        var CATEGORIES = [
+            { id: 'backgrounds', name: '\u80CC\u666F', subtitle: '' },
+            { id: 'makeup', name: '\u5986\u5BB9', subtitle: '' },
+            { id: 'face-decor', name: '\u8138\u9970', subtitle: '' },
+            { id: 'front-hair', name: '\u53D1\u578B', subtitle: '' },
+            { id: 'back-hair', name: '\u540E\u53D1', subtitle: '' },
+            { id: 'top', name: '\u4E0A\u8863', subtitle: '' },
+            { id: 'bottom', name: '\u4E0B\u88C5', subtitle: '' },
+            { id: 'outfit', name: '\u5957\u88C5', subtitle: '' },
+            { id: 'headwear', name: '\u5E3D\u5B50', subtitle: '' },
+            { id: 'head-set', name: '\u5934\u9970', subtitle: '' },
+            { id: 'glasses', name: '\u773C\u955C', subtitle: '' },
+            { id: 'neckwear', name: '\u9888\u9970', subtitle: '' },
+            { id: 'earrings', name: '\u8033\u73AF', subtitle: '' },
+            { id: 'wings', name: '\u7FC5\u8180', subtitle: '' },
+            { id: 'text', name: '\u6587\u5B57', subtitle: '' }
+        ];
+
+        var THUMB_SCALE = {
+            'backgrounds': 100,
+            'makeup': 100,
+            'face-decor': 200,
+            'front-hair': 100,
+            'back-hair': 100,
+            'top': 100,
+            'bottom': 100,
+            'outfit': 100,
+            'headwear': 180,
+            'head-set': 180,
+            'glasses': 220,
+            'neckwear': 200,
+            'earrings': 220,
+            'wings': 100,
+            'text': 120
+        };
+
+        var currentGender = 'female';
+        var currentCategory = 'backgrounds';
+        var selections = {};
+        var assetCache = {};
+
+        function loadAssets(categoryId) {
+            if (assetCache[categoryId]) return assetCache[categoryId];
+            var dir = path.join(__dirname, 'assets', categoryId);
+            if (!fs.existsSync(dir)) { assetCache[categoryId] = []; return []; }
+            var files = fs.readdirSync(dir).filter(function(f) { return f.endsWith('.gif') || f.endsWith('.png'); });
+            var defaults = files.filter(function(f) { return f.indexOf('default') === 0; });
+            var others = files.filter(function(f) { return f.indexOf('default') !== 0; });
+            assetCache[categoryId] = defaults.concat(others);
+            return assetCache[categoryId];
+        }
+
+        function buildTabs() {
+            var bar = document.getElementById('categoryBar');
+            bar.innerHTML = '';
+            CATEGORIES.forEach(function(cat) {
+                var btn = document.createElement('button');
+                btn.className = 'category-tab' + (cat.id === currentCategory ? ' active' : '');
+                btn.textContent = cat.name;
+                btn.setAttribute('data-cat', cat.id);
+                btn.addEventListener('click', function() { selectCategory(cat.id); });
+                bar.appendChild(btn);
+            });
+        }
+
+        function selectCategory(categoryId) {
+            currentCategory = categoryId;
+            var tabs = document.querySelectorAll('.category-tab');
+            CATEGORIES.forEach(function(cat, i) {
+                if (tabs[i]) tabs[i].classList.toggle('active', cat.id === categoryId);
+            });
+            var cat = CATEGORIES.find(function(c) { return c.id === categoryId; });
+            if (cat) {
+                document.getElementById('panelTitle').textContent = cat.name;
+                document.getElementById('panelSubtitle').textContent = cat.subtitle;
+            }
+            renderItems();
+        }
+
+        function selectItem(categoryId, file) {
+            selections[categoryId] = file;
+            if (categoryId === 'outfit') {
+                delete selections['top'];
+                delete selections['bottom'];
+            }
+            if (categoryId === 'top' || categoryId === 'bottom') {
+                delete selections['outfit'];
+            }
+            if (categoryId === 'front-hair') {
+                var backFile = file.replace('front-hair', 'back-hair');
+                var backDir = path.join(__dirname, 'assets', 'back-hair');
+                if (fs.existsSync(path.join(backDir, backFile))) {
+                    selections['back-hair'] = backFile;
+                } else {
+                    delete selections['back-hair'];
+                }
+            }
+            if (categoryId === 'back-hair') {
+                var frontFile = file.replace('back-hair', 'front-hair');
+                var frontDir = path.join(__dirname, 'assets', 'front-hair');
+                if (fs.existsSync(path.join(frontDir, frontFile))) {
+                    selections['front-hair'] = frontFile;
+                } else {
+                    delete selections['front-hair'];
+                }
+            }
+            renderItems();
+            renderAvatar();
+        }
+
+        function renderItems() {
+            var grid = document.getElementById('itemGrid');
+            grid.innerHTML = '';
+            var files = loadAssets(currentCategory);
+            files.forEach(function(file) {
+                var card = document.createElement('div');
+                var isDefault = file.indexOf('default') === 0;
+                card.className = 'item-card' + (selections[currentCategory] === file ? ' active' : '');
+                var thumb = document.createElement('div');
+                thumb.className = 'thumb';
+                var img = document.createElement('img');
+                img.src = path.join(__dirname, 'assets', currentCategory, file);
+                thumb.appendChild(img);
+                card.appendChild(thumb);
+                var label = document.createElement('div');
+                label.className = 'label';
+                label.textContent = isDefault ? '\u65E0' : file.replace(/\.(gif|png)$/, '');
+                card.appendChild(label);
+                card.addEventListener('click', function() {
+                    selectItem(currentCategory, file);
+                });
+                grid.appendChild(card);
+            });
+        }
+
+        function clearCategory() {
+            delete selections[currentCategory];
+            renderItems();
+            renderAvatar();
+        }
+
+        function renderAvatar() {
+            var frame = document.getElementById('previewFrame');
+            frame.innerHTML = '';
+            Object.keys(LAYER_ORDER).forEach(function(catId) {
+                if (!selections[catId]) return;
+                var file = selections[catId];
+                var div = document.createElement('div');
+                div.className = 'qq-show-layer';
+                div.style.zIndex = LAYER_ORDER[catId];
+                var img = document.createElement('img');
+                img.src = path.join(__dirname, 'assets', catId, file);
+                div.appendChild(img);
+                frame.appendChild(div);
+            });
+        }
+
+        function randomOutfit() {
+            selections = {};
+            CATEGORIES.forEach(function(cat) {
+                var files = loadAssets(cat.id);
+                if (files.length > 0 && Math.random() > 0.3) {
+                    selections[cat.id] = files[Math.floor(Math.random() * files.length)];
+                }
+            });
+            renderItems();
+            renderAvatar();
+        }
+
+        function initSelections() {
+            selections = {};
+            CATEGORIES.forEach(function(cat) {
+                var files = loadAssets(cat.id);
+                var defaultFile = files.find(function(f) { return f.indexOf('default') === 0; });
+                if (defaultFile) selections[cat.id] = defaultFile;
+            });
+        }
+
+        window._doRandom = randomOutfit;
+        window._doClear = clearCategory;
+
+        document.querySelectorAll('.gender-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.gender-tab').forEach(function(t) { t.classList.remove('active'); });
+                tab.classList.add('active');
+                currentGender = tab.getAttribute('data-gender');
+                assetCache = {};
+                initSelections();
+                renderItems();
+                renderAvatar();
+            });
+        });
+
+        buildTabs();
+        initSelections();
+        renderItems();
+        renderAvatar();
+    </script>
+</body>
+</html>
