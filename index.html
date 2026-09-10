@@ -2,359 +2,392 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QQ秀2000</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
         body {
-            font-family: 'SimHei', 'Microsoft YaHei', sans-serif;
-            font-size: 11px;
-            background: #C0D6E8;
+            font-family: 'Arial', sans-serif;
+            background-color: #d6e4ff;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
         }
-        .window {
-            width: 265px;
-            height: 475px;
-            background: #E8EEF4;
-            border: 3px solid #0044AA;
-            border-radius: 8px;
+        .app-container {
+            background-color: white;
+            border: 3px solid #1565c0;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            padding-bottom: 4px;
+            height: 660px;
+            width: 480px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
-        .titlebar {
-            background: linear-gradient(180deg, #99CCFF 0%, #3399FF 30%, #0066CC 100%);
-            padding: 3px 6px;
+        /* 蓝色表头 */
+        .header {
+            background: linear-gradient(180deg,
+                #2489cd 0%, #68d4f8 3%, #70e8fe 6%, #51d1fe 9%,
+                #4dcfff 12%, #49cbfe 15%, #42c3fe 18%, #3ebefd 21%,
+                #36b6fe 24%, #2baefe 27%, #27a9fd 30%, #1ea4fd 33%,
+                #189afe 36%, #1090fd 39%, #0c8cfa 42%, #0a88f7 45%,
+                #0785f3 48%, #037fef 51%, #047def 54%, #017aeb 57%,
+                #0277e8 60%, #0176e8 63%, #0073e8 66%, #0071e4 69%,
+                #006adf 72%, #0067db 75%, #0065d8 78%, #0061d0 81%,
+                #005ccd 84%, #0058c6 87%, #0054c3 90%, #004fb6 93%,
+                #0a58a0 96%, #0d65b8 100%
+            );
+            color: white;
+            height: 55px;
+            padding: 0 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 2px solid #BBDDFF;
-            border-left: 2px solid #BBDDFF;
-            border-bottom: 2px solid #003388;
-            border-right: 2px solid #003388;
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid #042d7b;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
             flex-shrink: 0;
         }
-        .titlebar-left { display: flex; align-items: center; gap: 4px; }
-        .titlebar-icon { width: 16px; height: 16px; image-rendering: pixelated; }
-        .titlebar-text { color: #FFF; font-size: 12px; font-weight: bold; text-shadow: 1px 1px 0 rgba(0,0,0,0.3); }
-        .titlebar-btns { display: flex; gap: 3px; }
-        .titlebar-btn {
-            width: 22px; height: 22px;
-            background: linear-gradient(180deg, #E8F0FF 0%, #C0D8F0 50%, #A0C0E0 100%);
-            border-top: 2px solid #FFF;
-            border-left: 2px solid #FFF;
-            border-bottom: 2px solid #003388;
-            border-right: 2px solid #003388;
-            border-radius: 3px;
+        .header-left { display: flex; align-items: center; gap: 8px; }
+        .header-logo { width: 35px; height: 35px; border-radius: 5px; image-rendering: pixelated; }
+        .header-title { font-size: 24px; font-weight: bold; }
+        .header-right { display: flex; gap: 6px; }
+        /* 标题栏按钮 */
+        .header-btn {
+            width: 40px; height: 40px;
+            font-size: 16px;
+            background: linear-gradient(180deg, #f0fafe 0%, #e7fbff 20%, #d0f0ff 40%, #a8dcfd 60%, #7cc4fc 75%, #54aefd 88%, #328fe5 100%);
+            color: #0f3761;
+            border: none;
+            border-bottom: 2px solid #0c4e9d;
+            border-bottom-left-radius: 1px;
+            position: relative;
+            box-shadow: 0 0 0 2px #ffffff;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            font-size: 11px; color: #0044AA;
         }
-        .control-bar {
-            padding: 2px 6px 1px;
+        .header-btn:active { transform: scale(0.95); }
+        .header-btn::after {
+            content: '';
+            position: absolute;
+            top: 1px; right: 0;
+            width: 2px; height: calc(100% - 1px);
+            background: linear-gradient(to bottom, #3c6d9d, #3c6d9d) 0 0 / 1px 100% no-repeat,
+                        linear-gradient(to bottom, #3c6d9d, #3c6d9d) 1px 1px / 1px calc(100% - 1px) no-repeat,
+                        linear-gradient(to bottom, #ffffff, #ffffff) 1px 0 / 1px 1px no-repeat;
+            border-bottom-right-radius: 1px;
+        }
+        /* 性别选择 + 随机搭配 */
+        .control-row {
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             justify-content: space-between;
+            padding: 8px 22px;
             flex-shrink: 0;
         }
-        .gender-tabs { display: flex; gap: 2px; }
-        .gender-tab {
-            padding: 3px 8px 4px;
-            font-family: inherit;
-            font-size: 10px;
+        .gender-group {
+            display: flex;
+            gap: 2px;
+            box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px #084293, 2px 2px 4px rgba(0,0,0,0.2);
+            width: 180px; height: 44px;
+        }
+        .gender-btn {
+            flex: 1;
+            font-size: 16px;
+            background: linear-gradient(180deg, #feffff 0%, #ffffff 15%, #f5fffe 30%, #effffe 42%, #e9fffd 48%, #e5fffe 55%, #defdff 62%, #d5fdfd 70%, #cff8fd 78%, #c2f4fd 85%, #b5eefd 90%, #a8ebfe 95%, #8cdbfb 100%);
+            color: #0f3761;
+            border: none;
+            border-bottom: 2px solid #5a8ab8;
+            position: relative;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
             font-weight: bold;
             cursor: pointer;
-            border-radius: 4px 4px 0 0;
-            border-top: 2px solid #FFF;
-            border-left: 2px solid #FFF;
-            border-bottom: 2px solid #003388;
-            border-right: 2px solid #003388;
+            display: flex; align-items: center; justify-content: center; gap: 4px;
         }
-        .gender-tab.active {
-            background: linear-gradient(180deg, #E8F4FF 0%, #B8D8F0 50%, #90C0E0 100%);
-            color: #000;
-            border-bottom-color: #E8EEF4;
-            margin-bottom: -2px;
-            z-index: 2;
-            position: relative;
+        .gender-btn:active { transform: scale(0.95); }
+        .gender-btn.active {
+            background: linear-gradient(180deg, #b8eafc 0%, #8edcfb 6%, #70d4f9 12%, #64d7fe 20%, #52cffe 30%, #40c5fe 40%, #2eb4fd 50%, #1da3f8 60%, #0f90f3 70%, #0786f0 78%, #047eeb 84%, #0171e1 90%, #0064d6 95%, #004db6 100%);
+            color: white;
+            box-shadow: 0 0 0 2px #ffffff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
         }
-        .gender-tab:not(.active) {
-            background: linear-gradient(180deg, #E0E8F0 0%, #C0D0E0 50%, #A0B8D0 100%);
-            color: #333;
-            z-index: 1;
-            position: relative;
+        .random-wrapper {
+            border-radius: 4px 4px 3px 3px;
+            box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px #084293;
         }
         .random-btn {
-            padding: 4px 10px;
-            background: linear-gradient(180deg, #FFE866 0%, #FFCC00 50%, #FF9900 100%);
-            border-top: 2px solid #FFE866;
-            border-left: 2px solid #FFE866;
-            border-bottom: 2px solid #CC7700;
-            border-right: 2px solid #CC7700;
-            border-radius: 4px;
-            font-family: inherit;
-            font-size: 10px;
+            width: 120px; height: 44px;
+            font-size: 16px;
+            background: linear-gradient(180deg, #fff3b0 0%, #ffd54f 30%, #ffb300 55%, #ff8f00 75%, #e65100 100%);
+            color: white;
+            border: none;
+            border-bottom: 2px solid #855230;
+            border-radius: 4px 4px 3px 3px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
             font-weight: bold;
-            color: #FFF;
             cursor: pointer;
-            text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
         }
-        .preview-frame {
-            margin: 0 6px;
-            background: #FFF;
-            border: 2px solid #0044AA;
-            border-radius: 4px;
-            height: 220px;
-            position: relative;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-        .qq-show-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        .qq-show-layer img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            object-position: center bottom;
-        }
-        .category-bar {
-            padding: 2px 6px 0;
+        .random-btn:active { transform: scale(0.95); }
+        /* 人物展示区 */
+        .avatar-frame {
+            margin: 0 16px;
+            border: 3px solid #1565c0;
+            border-radius: 6px;
+            background: white;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+            height: 340px;
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .qq-show-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .qq-show-layer img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+        /* 分类按钮 7列 */
+        .category-bar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
             gap: 2px;
+            padding: 6px 16px 0;
             flex-shrink: 0;
         }
-        .category-tab {
-            padding: 3px 5px 3px;
-            text-align: center;
-            border-radius: 3px;
-            font-family: inherit;
-            font-size: 10px;
+        .category-wrapper {
+            border: 2px solid #022974;
+        }
+        .category-btn {
+            width: 100%; height: 100%;
+            font-size: 14px;
+            background: linear-gradient(180deg, #ffffff 0%, #ffffff 30%, #f5fffe 40%, #e8fdfd 48%, #dcf6fe 55%, #d0f2fd 62%, #c6edfd 70%, #bce8fd 78%, #b2e2fd 86%, #a6dffd 93%, #85c2ee 97%, #5fa8e0 100%);
+            border: none;
+            color: #0f3761;
             font-weight: bold;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
             cursor: pointer;
-            border-top: 2px solid #FFF;
-            border-left: 2px solid #FFF;
-            border-bottom: 2px solid #003388;
-            border-right: 2px solid #003388;
-            white-space: nowrap;
+            padding: 8px 2px;
+            display: flex; align-items: center; justify-content: center;
         }
-        .category-tab.active {
-            background: linear-gradient(180deg, #3399FF 0%, #0066CC 50%, #0044AA 100%);
-            color: #FFF;
+        .category-btn:active { transform: scale(0.95); }
+        .category-btn.active {
+            background: linear-gradient(180deg, #2489cd 0%, #68d4f8 3%, #70e8fe 6%, #51d1fe 9%, #4dcfff 12%, #49cbfe 15%, #42c3fe 18%, #3ebefd 21%, #36b6fe 24%, #2baefe 27%, #27a9fd 30%, #1ea4fd 33%, #189afe 36%, #1090fd 39%, #0c8cfa 42%, #0a88f7 45%, #0785f3 48%, #037fef 51%, #047def 54%, #017aeb 57%, #0277e8 60%, #0176e8 63%, #0073e8 66%, #0071e4 69%, #006adf 72%, #0067db 75%, #0065d8 78%, #0061d0 81%, #005ccd 84%, #0058c6 87%, #0054c3 90%, #004fb6 100%);
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
         }
-        .category-tab:not(.active) {
-            background: linear-gradient(180deg, #F8F8F8 0%, #E0E0E0 50%, #C8C8C8 100%);
-            color: #333;
-        }
-        .item-panel {
-            margin: 0 6px 4px;
-            border: 2px solid #0044AA;
-            border-radius: 0 0 4px 4px;
-            overflow: hidden;
+        /* 物品面板 */
+        .hair-panel {
+            background: white;
+            border: 1px solid #042d7b;
+            margin: 6px 16px 8px;
             flex: 1;
             min-height: 0;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
-        .panel-header {
-            background: linear-gradient(180deg, #99CCFF 0%, #3399FF 30%, #0066CC 100%);
-            padding: 2px 6px;
+        .hair-header {
+            background: linear-gradient(180deg, #2489cd 0%, #68d4f8 3%, #70e8fe 6%, #51d1fe 9%, #4dcfff 12%, #49cbfe 15%, #42c3fe 18%, #3ebefd 21%, #36b6fe 24%, #2baefe 27%, #27a9fd 30%, #1ea4fd 33%, #189afe 36%, #1090fd 39%, #0c8cfa 42%, #0a88f7 45%, #0785f3 48%, #037fef 51%, #047def 54%, #017aeb 57%, #0277e8 60%, #0176e8 63%, #0073e8 66%, #0071e4 69%, #006adf 72%, #0067db 75%, #0065d8 78%, #0061d0 81%, #005ccd 84%, #0058c6 87%, #0054c3 90%, #004fb6 100%);
+            color: white;
+            height: 40px;
+            padding: 0 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 2px solid #BBDDFF;
-            border-left: 2px solid #BBDDFF;
-            border-bottom: 2px solid #003388;
-            border-right: 2px solid #003388;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 1px 2px rgba(0,0,0,0.15);
             flex-shrink: 0;
         }
-        .panel-title-group { display: flex; flex-direction: column; gap: 0; }
-        .panel-title { color: #FFF; font-size: 11px; font-weight: bold; }
-        .panel-subtitle { color: #E0F0FF; font-size: 8px; }
+        .hair-title { font-size: 18px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
         .clear-btn {
-            padding: 2px 6px;
-            background: linear-gradient(180deg, #E8F0FF 0%, #C0D8F0 50%, #A0C0E0 100%);
-            border-top: 2px solid #FFF;
-            border-left: 2px solid #FFF;
-            border-bottom: 2px solid #003388;
-            border-right: 2px solid #003388;
-            border-radius: 3px;
-            font-family: inherit;
-            font-size: 9px;
+            width: 80px; height: 32px;
+            font-size: 14px;
+            background: linear-gradient(180deg, #f0fafe 0%, #e7fbff 20%, #d0f0ff 40%, #a8dcfd 60%, #7cc4fc 75%, #54aefd 88%, #328fe5 100%);
+            color: #0f3761;
+            border: none;
+            border-bottom: 2px solid #0c4e9d;
+            position: relative;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px #ffffff;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
             cursor: pointer;
-            display: flex; align-items: center; gap: 2px;
+            display: flex; align-items: center; justify-content: center; gap: 4px;
         }
-        .panel-body {
-            background: #FFF;
-            padding: 3px;
+        .clear-btn:active { transform: scale(0.95); }
+        .hair-body {
+            padding: 6px;
+            background: white;
             flex: 1;
             min-height: 0;
             overflow-y: auto;
             overflow-x: hidden;
         }
-        .panel-body::-webkit-scrollbar { width: 6px; }
-        .panel-body::-webkit-scrollbar-track { background: #E0E8F0; border-radius: 2px; }
-        .panel-body::-webkit-scrollbar-thumb { background: #3399FF; border-radius: 2px; }
+        .hair-body::-webkit-scrollbar { width: 8px; }
+        .hair-body::-webkit-scrollbar-track { background: #f0f0f0; }
+        .hair-body::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 3px; }
+        /* 物品卡片 */
         .item-grid {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 4px;
         }
         .item-card {
-            min-width: 56px;
-            width: 56px;
-            background: #FFF;
-            border: 2px solid #0044AA;
-            border-radius: 3px;
+            position: relative;
+            padding: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow: hidden;
-            flex-shrink: 0;
+            overflow: visible;
         }
-        .item-card:hover { border-color: #3399FF; }
-        .item-card.active { border-color: #FF9900; }
-        .item-card .thumb {
+        .item-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200' preserveAspectRatio='none'%3E%3Crect x='0.5' y='0.5' width='199' height='199' rx='10' ry='10' fill='none' stroke='%23effffe' stroke-width='1'/%3E%3Crect x='1.5' y='1.5' width='197' height='197' rx='9' ry='9' fill='none' stroke='%23d8f7fc' stroke-width='1'/%3E%3Crect x='2.5' y='2.5' width='195' height='195' rx='8' ry='8' fill='none' stroke='%23b7e7f5' stroke-width='1'/%3E%3Crect x='3.5' y='3.5' width='193' height='193' rx='7' ry='7' fill='none' stroke='%239fd9f1' stroke-width='1'/%3E%3Crect x='4.5' y='4.5' width='191' height='191' rx='6' ry='6' fill='none' stroke='%2397daf5' stroke-width='1'/%3E%3Crect x='5.5' y='5.5' width='189' height='189' rx='5' ry='5' fill='none' stroke='%2382c2de' stroke-width='1'/%3E%3Crect x='6.5' y='6.5' width='187' height='187' rx='4' ry='4' fill='none' stroke='%23679cbc' stroke-width='1'/%3E%3C/svg%3E");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .item-card.selected::before { display: none; }
+        .item-card.selected {
+            padding: 4px;
+            background: white;
+            border-radius: 0;
+            box-shadow: inset 0 0 0 2px #01316a;
+            overflow: visible;
+        }
+        .item-inner {
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(0deg, #e8f4f8 0%, #f0f8fa 25%, #f6fafc 50%, #fafdfe 75%, #fdfeff 100%);
+            padding: 4px;
+            border-radius: 3px;
+            margin: -1px;
+        }
+        .item-card.selected .item-inner {
+            background: linear-gradient(0deg, #d84315 0%, #fb8c00 30%, #ffa000 60%, #fff59d 100%);
+            padding: 4px;
+            border-radius: 0;
+            margin: -1px;
+        }
+        .item-thumb {
             width: 100%;
-            height: 56px;
+            height: 70px;
+            background: white;
+            border: 1px solid #c0c0c0;
             overflow: hidden;
-            background: #FFF;
         }
-        .item-card .thumb img {
+        .item-thumb img {
             width: 100%; height: 100%;
             object-fit: contain;
             display: block;
         }
-        .item-card .label {
-            width: 100%;
-            padding: 2px 1px;
+        .item-label {
+            padding: 12px 4px;
             text-align: center;
-            font-size: 9px;
-            color: #333;
-            background: #F0F4F8;
-            border-top: 1px solid #D0D8E0;
+            font-size: 12px;
+            color: #0f3761;
+            font-weight: bold;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .item-card.active .label {
-            background: linear-gradient(180deg, #FFD700 0%, #FF9900 100%);
-            color: #FFF;
-            font-weight: bold;
+        .item-card.selected .item-label {
+            color: white;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
-    <div class="window">
-        <div class="titlebar">
-            <div class="titlebar-left">
-                <img class="titlebar-icon" src="assets/icons/qqshow_icon.PNG" onerror="this.style.display='none'">
-                <span class="titlebar-text">QQ秀2000</span>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <img class="header-logo" src="assets/icons/qqshow_icon.PNG" onerror="this.style.display='none'">
+                <span class="header-title">QQ秀2000</span>
             </div>
-            <div class="titlebar-btns">
-                <button class="titlebar-btn" onclick="location.reload()">&#x21BB;</button>
-                <button class="titlebar-btn">&#x2919;</button>
+            <div class="header-right">
+                <button class="header-btn" onclick="location.reload()"><i class="fas fa-redo"></i></button>
+                <button class="header-btn" onclick="window._doRandom()"><i class="fas fa-download"></i></button>
             </div>
         </div>
-        <div class="control-bar">
-            <div class="gender-tabs">
-                <button class="gender-tab active" data-gender="female">&#9792; 女生</button>
-                <button class="gender-tab" data-gender="male">&#9794; 男生</button>
+
+        <!-- 性别选择 + 随机搭配 -->
+        <div class="control-row">
+            <div class="gender-group">
+                <button class="gender-btn active" data-gender="female"><i class="fas fa-venus" style="font-size:12px;"></i> 女生</button>
+                <button class="gender-btn" data-gender="male"><i class="fas fa-mars" style="font-size:12px;"></i> 男生</button>
             </div>
-            <button class="random-btn" onclick="window._doRandom()">&#x968F;&#x673A;&#x642D;&#x914D;</button>
+            <div class="random-wrapper">
+                <button class="random-btn" onclick="window._doRandom()">随机搭配</button>
+            </div>
         </div>
-        <div class="preview-frame" id="previewFrame"></div>
+
+        <!-- 人物展示区 -->
+        <div class="avatar-frame" id="previewFrame"></div>
+
+        <!-- 分类按钮 -->
         <div class="category-bar" id="categoryBar"></div>
-        <div class="item-panel">
-            <div class="panel-header">
-                <div class="panel-title-group">
-                    <span class="panel-title" id="panelTitle"></span>
-                    <span class="panel-subtitle" id="panelSubtitle"></span>
-                </div>
-                <button class="clear-btn" onclick="window._doClear()">&#x1F5D1; &#x6E05;&#x7A7A;</button>
+
+        <!-- 物品面板 -->
+        <div class="hair-panel">
+            <div class="hair-header">
+                <span class="hair-title" id="panelTitle">发型</span>
+                <button class="clear-btn" onclick="window._doClear()"><i class="fas fa-trash"></i> 清空</button>
             </div>
-            <div class="panel-body">
+            <div class="hair-body">
                 <div class="item-grid" id="itemGrid"></div>
             </div>
         </div>
     </div>
+
     <script>
         var fs = require('fs');
         var path = require('path');
 
         var LAYER_ORDER = {
-            'backgrounds': 0,
-            'background-decor': 1,
-            'vehicle': 2,
-            'wings': 3,
-            'back-hair': 4,
-            'bottom': 5,
-            'top': 7,
-            'outfit': 8,
-            'makeup': 9,
-            'head-set': 10,
-            'front-hair': 11,
-            'neckwear': 11,
-            'earrings': 12,
-            'face-decor': 13,
-            'glasses': 14,
-            'headwear': 15,
-            'other-accessories': 16,
-            'frame': 17,
-            'text': 18,
-            'companion': 19,
-            'sparkle': 20
+            'backgrounds': 0, 'background-decor': 1, 'vehicle': 2, 'wings': 3,
+            'back-hair': 4, 'bottom': 5, 'top': 7, 'outfit': 8, 'makeup': 9,
+            'head-set': 10, 'front-hair': 11, 'neckwear': 11, 'earrings': 12,
+            'face-decor': 13, 'glasses': 14, 'headwear': 15, 'other-accessories': 16,
+            'frame': 17, 'text': 18, 'companion': 19, 'sparkle': 20
         };
 
         var CATEGORIES = [
-            { id: 'backgrounds', name: '\u80CC\u666F', subtitle: '' },
-            { id: 'makeup', name: '\u5986\u5BB9', subtitle: '' },
-            { id: 'face-decor', name: '\u8138\u9970', subtitle: '' },
-            { id: 'front-hair', name: '\u53D1\u578B', subtitle: '' },
-            { id: 'back-hair', name: '\u540E\u53D1', subtitle: '' },
-            { id: 'top', name: '\u4E0A\u8863', subtitle: '' },
-            { id: 'bottom', name: '\u4E0B\u88C5', subtitle: '' },
-            { id: 'outfit', name: '\u5957\u88C5', subtitle: '' },
-            { id: 'headwear', name: '\u5E3D\u5B50', subtitle: '' },
-            { id: 'head-set', name: '\u5934\u9970', subtitle: '' },
-            { id: 'glasses', name: '\u773C\u955C', subtitle: '' },
-            { id: 'neckwear', name: '\u9888\u9970', subtitle: '' },
-            { id: 'earrings', name: '\u8033\u73AF', subtitle: '' },
-            { id: 'wings', name: '\u7FC5\u8180', subtitle: '' },
-            { id: 'text', name: '\u6587\u5B57', subtitle: '' }
+            { id: 'backgrounds', name: '背景' },
+            { id: 'front-hair', name: '发型' },
+            { id: 'top', name: '上衣' },
+            { id: 'bottom', name: '下装' },
+            { id: 'outfit', name: '套装' },
+            { id: 'other-accessories', name: '配饰' },
+            { id: 'text', name: '文字' }
         ];
 
-        var THUMB_SCALE = {
-            'backgrounds': 100,
-            'makeup': 100,
-            'face-decor': 200,
-            'front-hair': 100,
-            'back-hair': 100,
-            'top': 100,
-            'bottom': 100,
-            'outfit': 100,
-            'headwear': 180,
-            'head-set': 180,
-            'glasses': 220,
-            'neckwear': 200,
-            'earrings': 220,
-            'wings': 100,
-            'text': 120
-        };
+        var ALL_CATEGORIES = [
+            { id: 'backgrounds', name: '背景' },
+            { id: 'makeup', name: '妆容' },
+            { id: 'face-decor', name: '脸饰' },
+            { id: 'front-hair', name: '发型' },
+            { id: 'back-hair', name: '后发' },
+            { id: 'top', name: '上衣' },
+            { id: 'bottom', name: '下装' },
+            { id: 'outfit', name: '套装' },
+            { id: 'headwear', name: '帽子' },
+            { id: 'head-set', name: '头饰' },
+            { id: 'glasses', name: '眼镜' },
+            { id: 'neckwear', name: '颈饰' },
+            { id: 'earrings', name: '耳环' },
+            { id: 'wings', name: '翅膀' },
+            { id: 'other-accessories', name: '配饰' },
+            { id: 'text', name: '文字' }
+        ];
 
         var currentGender = 'female';
-        var currentCategory = 'backgrounds';
+        var currentCategory = 'front-hair';
         var selections = {};
         var assetCache = {};
 
@@ -373,55 +406,44 @@
             var bar = document.getElementById('categoryBar');
             bar.innerHTML = '';
             CATEGORIES.forEach(function(cat) {
+                var wrapper = document.createElement('div');
+                wrapper.className = 'category-wrapper';
                 var btn = document.createElement('button');
-                btn.className = 'category-tab' + (cat.id === currentCategory ? ' active' : '');
+                btn.className = 'category-btn' + (cat.id === currentCategory ? ' active' : '');
                 btn.textContent = cat.name;
                 btn.setAttribute('data-cat', cat.id);
                 btn.addEventListener('click', function() { selectCategory(cat.id); });
-                bar.appendChild(btn);
+                wrapper.appendChild(btn);
+                bar.appendChild(wrapper);
             });
         }
 
         function selectCategory(categoryId) {
             currentCategory = categoryId;
-            var tabs = document.querySelectorAll('.category-tab');
+            var btns = document.querySelectorAll('.category-btn');
             CATEGORIES.forEach(function(cat, i) {
-                if (tabs[i]) tabs[i].classList.toggle('active', cat.id === categoryId);
+                if (btns[i]) btns[i].classList.toggle('active', cat.id === categoryId);
             });
             var cat = CATEGORIES.find(function(c) { return c.id === categoryId; });
-            if (cat) {
-                document.getElementById('panelTitle').textContent = cat.name;
-                document.getElementById('panelSubtitle').textContent = cat.subtitle;
-            }
+            if (cat) document.getElementById('panelTitle').textContent = cat.name;
             renderItems();
         }
 
         function selectItem(categoryId, file) {
             selections[categoryId] = file;
-            if (categoryId === 'outfit') {
-                delete selections['top'];
-                delete selections['bottom'];
-            }
-            if (categoryId === 'top' || categoryId === 'bottom') {
-                delete selections['outfit'];
-            }
+            if (categoryId === 'outfit') { delete selections['top']; delete selections['bottom']; }
+            if (categoryId === 'top' || categoryId === 'bottom') { delete selections['outfit']; }
             if (categoryId === 'front-hair') {
                 var backFile = file.replace('front-hair', 'back-hair');
                 var backDir = path.join(__dirname, 'assets', 'back-hair');
-                if (fs.existsSync(path.join(backDir, backFile))) {
-                    selections['back-hair'] = backFile;
-                } else {
-                    delete selections['back-hair'];
-                }
+                if (fs.existsSync(path.join(backDir, backFile))) { selections['back-hair'] = backFile; }
+                else { delete selections['back-hair']; }
             }
             if (categoryId === 'back-hair') {
                 var frontFile = file.replace('back-hair', 'front-hair');
                 var frontDir = path.join(__dirname, 'assets', 'front-hair');
-                if (fs.existsSync(path.join(frontDir, frontFile))) {
-                    selections['front-hair'] = frontFile;
-                } else {
-                    delete selections['front-hair'];
-                }
+                if (fs.existsSync(path.join(frontDir, frontFile))) { selections['front-hair'] = frontFile; }
+                else { delete selections['front-hair']; }
             }
             renderItems();
             renderAvatar();
@@ -434,29 +456,26 @@
             files.forEach(function(file) {
                 var card = document.createElement('div');
                 var isDefault = file.indexOf('default') === 0;
-                card.className = 'item-card' + (selections[currentCategory] === file ? ' active' : '');
+                card.className = 'item-card' + (selections[currentCategory] === file ? ' selected' : '');
+                var inner = document.createElement('div');
+                inner.className = 'item-inner';
                 var thumb = document.createElement('div');
-                thumb.className = 'thumb';
+                thumb.className = 'item-thumb';
                 var img = document.createElement('img');
                 img.src = path.join(__dirname, 'assets', currentCategory, file);
                 thumb.appendChild(img);
-                card.appendChild(thumb);
+                inner.appendChild(thumb);
                 var label = document.createElement('div');
-                label.className = 'label';
-                label.textContent = isDefault ? '\u65E0' : file.replace(/\.(gif|png)$/, '');
-                card.appendChild(label);
-                card.addEventListener('click', function() {
-                    selectItem(currentCategory, file);
-                });
+                label.className = 'item-label';
+                label.textContent = isDefault ? '无' : file.replace(/\.(gif|png)$/, '');
+                inner.appendChild(label);
+                card.appendChild(inner);
+                card.addEventListener('click', function() { selectItem(currentCategory, file); });
                 grid.appendChild(card);
             });
         }
 
-        function clearCategory() {
-            delete selections[currentCategory];
-            renderItems();
-            renderAvatar();
-        }
+        function clearCategory() { delete selections[currentCategory]; renderItems(); renderAvatar(); }
 
         function renderAvatar() {
             var frame = document.getElementById('previewFrame');
@@ -498,9 +517,9 @@
         window._doRandom = randomOutfit;
         window._doClear = clearCategory;
 
-        document.querySelectorAll('.gender-tab').forEach(function(tab) {
+        document.querySelectorAll('.gender-btn').forEach(function(tab) {
             tab.addEventListener('click', function() {
-                document.querySelectorAll('.gender-tab').forEach(function(t) { t.classList.remove('active'); });
+                document.querySelectorAll('.gender-btn').forEach(function(t) { t.classList.remove('active'); });
                 tab.classList.add('active');
                 currentGender = tab.getAttribute('data-gender');
                 assetCache = {};
