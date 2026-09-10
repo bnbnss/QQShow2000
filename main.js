@@ -5,8 +5,8 @@ let mainWindow;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 480,
-        height: 660,
+        width: 269,
+        height: 465,
         frame: false,
         resizable: false,
         title: 'QQ秀2000',

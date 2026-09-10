@@ -4,17 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QQ秀2000</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Arial', sans-serif;
             background-color: #d6e4ff;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            zoom: 0.4;
         }
         .app-container {
             background-color: white;
@@ -22,27 +18,48 @@
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             padding-bottom: 4px;
-            height: 660px;
-            width: 480px;
+            height: 1163px;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
-        /* 蓝色表头 */
         .header {
             background: linear-gradient(180deg,
-                #2489cd 0%, #68d4f8 3%, #70e8fe 6%, #51d1fe 9%,
-                #4dcfff 12%, #49cbfe 15%, #42c3fe 18%, #3ebefd 21%,
-                #36b6fe 24%, #2baefe 27%, #27a9fd 30%, #1ea4fd 33%,
-                #189afe 36%, #1090fd 39%, #0c8cfa 42%, #0a88f7 45%,
-                #0785f3 48%, #037fef 51%, #047def 54%, #017aeb 57%,
-                #0277e8 60%, #0176e8 63%, #0073e8 66%, #0071e4 69%,
-                #006adf 72%, #0067db 75%, #0065d8 78%, #0061d0 81%,
-                #005ccd 84%, #0058c6 87%, #0054c3 90%, #004fb6 93%,
-                #0a58a0 96%, #0d65b8 100%
+                #2489cd 0%,
+                #68d4f8 3%,
+                #70e8fe 6%,
+                #51d1fe 9%,
+                #4dcfff 12%,
+                #49cbfe 15%,
+                #42c3fe 18%,
+                #3ebefd 21%,
+                #36b6fe 24%,
+                #2baefe 27%,
+                #27a9fd 30%,
+                #1ea4fd 33%,
+                #189afe 36%,
+                #1090fd 39%,
+                #0c8cfa 42%,
+                #0a88f7 45%,
+                #0785f3 48%,
+                #037fef 51%,
+                #047def 54%,
+                #017aeb 57%,
+                #0277e8 60%,
+                #0176e8 63%,
+                #0073e8 66%,
+                #0071e4 69%,
+                #006adf 72%,
+                #0067db 75%,
+                #0065d8 78%,
+                #0061d0 81%,
+                #005ccd 84%,
+                #0058c6 87%,
+                #0054c3 90%,
+                #004fb6 93%,
+                #0a58a0 96%,
+                #0d65b8 100%
             );
             color: white;
-            height: 55px;
+            height: 77px;
             padding: 0 12px;
             display: flex;
             align-items: center;
@@ -51,17 +68,401 @@
             border-bottom: 1px solid #042d7b;
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.2);
             text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-            flex-shrink: 0;
         }
-        .header-left { display: flex; align-items: center; gap: 8px; }
-        .header-logo { width: 35px; height: 35px; border-radius: 5px; image-rendering: pixelated; }
-        .header-title { font-size: 24px; font-weight: bold; }
-        .header-right { display: flex; gap: 6px; }
-        /* 标题栏按钮 */
-        .header-btn {
-            width: 40px; height: 40px;
+
+        .tab-button {
+            width: 100%;
+            height: 100%;
+            font-size: 20px;
+            background: linear-gradient(180deg, #feffff 0%, #ffffff 15%, #f5fffe 30%, #effffe 42%, #e9fffd 48%, #e5fffe 55%, #defdff 62%, #d5fdfd 70%, #cff8fd 78%, #c2f4fd 85%, #b5eefd 90%, #a8ebfe 95%, #8cdbfb 100%);
+            color: #0f3761;
+            border: none;
+            border-bottom: 2px solid #5a8ab8;
+            border-bottom-left-radius: 1px;
+            border-bottom-right-radius: 1px;
+            position: relative;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+            font-weight: bold;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 1px) 0, 100% 1px, 100% 100%, 0 100%);
+        }
+        .tab-wrapper {
+            display: inline-block;
+            position: relative;
+            flex: 1;
+            height: 100%;
+        }
+        .tab-wrapper:active .tab-button {
+            transform: scale(0.95);
+        }
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            right: 0;
+            width: 2px;
+            height: calc(100% - 1px);
+            background: 
+                linear-gradient(to bottom, #5a8ab8, #5a8ab8) 0 0 / 1px 100% no-repeat,
+                linear-gradient(to bottom, #5a8ab8, #5a8ab8) 1px 1px / 1px calc(100% - 1px) no-repeat;
+            border-bottom-right-radius: 1px;
+        }
+        .tab-button.active {
+            background: linear-gradient(180deg, #b8eafc 0%, #8edcfb 6%, #70d4f9 12%, #64d7fe 20%, #52cffe 30%, #40c5fe 40%, #2eb4fd 50%, #1da3f8 60%, #0f90f3 70%, #0786f0 78%, #047eeb 84%, #0171e1 90%, #0064d6 95%, #004db6 100%);
+            color: white;
+            border: none;
+            border-bottom: 2px solid #0c4e9d;
+            border-bottom-left-radius: 1px;
+            border-bottom-right-radius: 1px;
+            position: relative;
+            box-shadow: 0 0 0 2px #ffffff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 1px) 0, 100% 1px, 100% 100%, 0 100%);
+        }
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            right: 0;
+            width: 2px;
+            height: calc(100% - 1px);
+            background: 
+                linear-gradient(to bottom, #3c6d9d, #3c6d9d) 0 0 / 1px 100% no-repeat,
+                linear-gradient(to bottom, #3c6d9d, #3c6d9d) 1px 1px / 1px calc(100% - 1px) no-repeat,
+                linear-gradient(to bottom, #ffffff, #ffffff) 1px 0 / 1px 1px no-repeat;
+            border-bottom-right-radius: 1px;
+        }
+        .category-button {
+            font-size: 22px;
+            background: linear-gradient(180deg,
+                #ffffff 0%,
+                #ffffff 30%,
+                #f5fffe 40%,
+                #e8fdfd 48%,
+                #dcf6fe 55%,
+                #d0f2fd 62%,
+                #c6edfd 70%,
+                #bce8fd 78%,
+                #b2e2fd 86%,
+                #a6dffd 93%,
+                #85c2ee 97%,
+                #5fa8e0 100%
+            );
+            border: none;
+            border-radius: 0;
+            color: #0f3761;
+            box-shadow: none;
+            font-weight: bold;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+            cursor: pointer;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+        .category-button.active {
+            background: linear-gradient(180deg,
+                #2489cd 0%,
+                #68d4f8 3%,
+                #70e8fe 6%,
+                #51d1fe 9%,
+                #4dcfff 12%,
+                #49cbfe 15%,
+                #42c3fe 18%,
+                #3ebefd 21%,
+                #36b6fe 24%,
+                #2baefe 27%,
+                #27a9fd 30%,
+                #1ea4fd 33%,
+                #189afe 36%,
+                #1090fd 39%,
+                #0c8cfa 42%,
+                #0a88f7 45%,
+                #0785f3 48%,
+                #037fef 51%,
+                #047def 54%,
+                #017aeb 57%,
+                #0277e8 60%,
+                #0176e8 63%,
+                #0073e8 66%,
+                #0071e4 69%,
+                #006adf 72%,
+                #0067db 75%,
+                #0065d8 78%,
+                #0061d0 81%,
+                #005ccd 84%,
+                #0058c6 87%,
+                #0054c3 90%,
+                #004fb6 100%
+            );
+            color: white;
+            border: none;
+            box-shadow: none;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+        .category-wrapper {
+            display: inline-block;
+            border: 2px solid #022974;
+            border-radius: 0;
+            width: 100%;
+            height: 65px;
+            padding: 0;
+            margin: 0;
+        }
+        .category-wrapper:active .category-button {
+            transform: scale(0.95);
+        }
+        .random-button {
+            width: 100%;
+            height: 100%;
+            font-size: 20px;
+            background: linear-gradient(180deg,
+                #fff3b0 0%,
+                #ffd54f 30%,
+                #ffb300 55%,
+                #ff8f00 75%,
+                #e65100 100%
+            );
+            color: white;
+            border: none;
+            border-bottom: 2px solid #855230;
+            border-radius: 4px 4px 3px 3px;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .random-button::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            right: 0;
+            width: 2px;
+            height: calc(100% - 1px);
+            background: 
+                linear-gradient(to bottom, #855230, #855230) 0 0 / 1px 100% no-repeat,
+                linear-gradient(to bottom, #855230, #855230) 1px 1px / 1px calc(100% - 1px) no-repeat;
+            border-bottom-right-radius: 1px;
+        }
+        .button-wrapper {
+            display: inline-block;
+            border-radius: 4px 4px 3px 3px;
+            box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px #084293;
+            width: 135.5px;
+            height: 58px;
+        }
+        .button-wrapper:active .random-button {
+            transform: scale(0.95);
+        }
+        .hair-panel {
+            background: white;
+            border: 1px solid #042d7b;
+            border-radius: 0;
+            margin-top: 8px;
+        }
+        .hair-header {
+            background: linear-gradient(180deg,
+                #2489cd 0%,
+                #68d4f8 3%,
+                #70e8fe 6%,
+                #51d1fe 9%,
+                #4dcfff 12%,
+                #49cbfe 15%,
+                #42c3fe 18%,
+                #3ebefd 21%,
+                #36b6fe 24%,
+                #2baefe 27%,
+                #27a9fd 30%,
+                #1ea4fd 33%,
+                #189afe 36%,
+                #1090fd 39%,
+                #0c8cfa 42%,
+                #0a88f7 45%,
+                #0785f3 48%,
+                #037fef 51%,
+                #047def 54%,
+                #017aeb 57%,
+                #0277e8 60%,
+                #0176e8 63%,
+                #0073e8 66%,
+                #0071e4 69%,
+                #006adf 72%,
+                #0067db 75%,
+                #0065d8 78%,
+                #0061d0 81%,
+                #005ccd 84%,
+                #0058c6 87%,
+                #0054c3 90%,
+                #0a58a0 100%
+            );
+            color: white;
+            height: 77px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 1px 2px rgba(0,0,0,0.15);
+        }
+        .hair-header h2 {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+        .hair-content {
+            padding: 8px;
+            background: white;
+            height: 400px !important;
+            overflow-y: auto !important;
+        }
+        .hair-content::-webkit-scrollbar { width: 8px; }
+        .hair-content::-webkit-scrollbar-track { background: #f0f0f0; }
+        .hair-content::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 3px; }
+        #categoryBar::-webkit-scrollbar { width: 16px; }
+        #categoryBar::-webkit-scrollbar-track { background: #d0d8e8; border-radius: 6px; margin: 2px; }
+        #categoryBar::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #4a9de0, #1565c0); border-radius: 6px; border: 3px solid #d0d8e8; }
+        #categoryBar::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #2196f3, #0d47a1); }
+        .hair-option {
+            position: relative;
+            padding: 6px;
+            border-radius: 10px;
+            margin: 0;
+            overflow: visible;
+            cursor: pointer;
+            outline: none;
+        }
+        .hair-option::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%27200%27%20viewBox%3D%270%200%20200%20200%27%20preserveAspectRatio%3D%27none%27%3E%3Crect%20x%3D%270.5%27%20y%3D%270.5%27%20width%3D%27199%27%20height%3D%27199%27%20rx%3D%2710%27%20ry%3D%2710%27%20fill%3D%27none%27%20stroke%3D%27%23effffe%27%20stroke-width%3D%271%27%2F%3E%3Crect%20x%3D%271.5%27%20y%3D%271.5%27%20width%3D%27197%27%20height%3D%27197%27%20rx%3D%279%27%20ry%3D%279%27%20fill%3D%27none%27%20stroke%3D%27%23d8f7fc%27%20stroke-width%3D%271%27%2F%3E%3Crect%20x%3D%272.5%27%20y%3D%272.5%27%20width%3D%27195%27%20height%3D%27195%27%20rx%3D%278%27%20ry%3D%278%27%20fill%3D%27none%27%20stroke%3D%27%23b7e7f5%27%20stroke-width%3D%271%27%2F%3E%3Crect%20x%3D%273.5%27%20y%3D%273.5%27%20width%3D%27193%27%20height%3D%27193%27%20rx%3D%277%27%20ry%3D%277%27%20fill%3D%27none%27%20stroke%3D%27%239fd9f1%27%20stroke-width%3D%271%27%2F%3E%3Crect%20x%3D%274.5%27%20y%3D%274.5%27%20width%3D%27191%27%20height%3D%27191%27%20rx%3D%276%27%20ry%3D%276%27%20fill%3D%27none%27%20stroke%3D%27%2397daf5%27%20stroke-width%3D%271%27%2F%3E%3Crect%20x%3D%275.5%27%20y%3D%275.5%27%20width%3D%27189%27%20height%3D%27189%27%20rx%3D%275%27%20ry%3D%275%27%20fill%3D%27none%27%20stroke%3D%27%2382c2de%27%20stroke-width%3D%271%27%2F%3E%3Crect%20x%3D%276.5%27%20y%3D%276.5%27%20width%3D%27187%27%20height%3D%27187%27%20rx%3D%274%27%20ry%3D%274%27%20fill%3D%27none%27%20stroke%3D%27%23679cbc%27%20stroke-width%3D%271%27%2F%3E%3C%2Fsvg%3E");
+            background-size: 100% 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .hair-option.selected::before { display: none; }
+        .hair-option.selected {
+            padding: 6px;
+            background: white;
+            border-radius: 0 !important;
+            margin: 0;
+            box-shadow: inset 0 0 0 2px #01316a;
+        }
+        .hair-option .hair-inner {
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(0deg, 
+                #e8f4f8 0%, 
+                #f0f8fa 25%, 
+                #f6fafc 50%, 
+                #fafdfe 75%, 
+                #fdfeff 100%
+            );
+            padding: 6px;
+            border-radius: 3px;
+            margin: -1px;
+        }
+        .hair-option.selected .hair-inner {
+            background: linear-gradient(0deg, #d84315 0%, #fb8c00 30%, #ffa000 60%, #fff59d 100%);
+            padding: 6px;
+            border-radius: 0 !important;
+            margin: -1px;
+        }
+        .hair-img {
+            width: 100%;
+            height: 100px;
+            background: white;
+            border: 1px solid #c0c0c0;
+        }
+        .hair-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .hair-option .label {
+            padding: 20px 6px;
+            text-align: center;
             font-size: 16px;
-            background: linear-gradient(180deg, #f0fafe 0%, #e7fbff 20%, #d0f0ff 40%, #a8dcfd 60%, #7cc4fc 75%, #54aefd 88%, #328fe5 100%);
+            color: #0f3761;
+            font-weight: bold;
+            background: transparent;
+            border-top: none;
+        }
+        .hair-option.selected .label {
+            background: transparent;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+            border-top: none;
+        }
+        .clear-btn {
+            width: 105px;
+            height: 55px;
+            font-size: 22px;
+            background: linear-gradient(180deg,
+                #f0fafe 0%,
+                #e7fbff 20%,
+                #d0f0ff 40%,
+                #a8dcfd 60%,
+                #7cc4fc 75%,
+                #54aefd 88%,
+                #328fe5 100%
+            );
+            color: #0f3761;
+            border: none;
+            border-bottom: 2px solid #0c4e9d;
+            border-bottom-left-radius: 1px;
+            position: relative;
+            font-weight: bold;
+            padding: 4px 12px;
+            box-shadow: 0 0 0 2px #ffffff;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+            cursor: pointer;
+        }
+        .clear-btn:active { transform: scale(0.95); }
+        .clear-btn::after {
+            content: '';
+            position: absolute;
+            top: 1px; right: 0;
+            width: 2px;
+            height: calc(100% - 1px);
+            background: 
+                linear-gradient(to bottom, #3c6d9d, #3c6d9d) 0 0 / 1px 100% no-repeat,
+                linear-gradient(to bottom, #3c6d9d, #3c6d9d) 1px 1px / 1px calc(100% - 1px) no-repeat,
+                linear-gradient(to bottom, #ffffff, #ffffff) 1px 0 / 1px 1px no-repeat;
+            border-bottom-right-radius: 1px;
+        }
+        .avatar-frame {
+            border: 3px solid #1565c0;
+            border-radius: 6px;
+            background: white;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+            min-height: 555px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .qq-show-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .qq-show-layer img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+        .header-btn {
+            width: 55px;
+            height: 52.5px;
+            font-size: 22px;
+            background: linear-gradient(180deg,
+                #f0fafe 0%,
+                #e7fbff 20%,
+                #d0f0ff 40%,
+                #a8dcfd 60%,
+                #7cc4fc 75%,
+                #54aefd 88%,
+                #328fe5 100%
+            );
             color: #0f3761;
             border: none;
             border-bottom: 2px solid #0c4e9d;
@@ -70,285 +471,72 @@
             box-shadow: 0 0 0 2px #ffffff;
             text-shadow: 0 1px 0 rgba(255,255,255,0.5);
             cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
         }
         .header-btn:active { transform: scale(0.95); }
         .header-btn::after {
             content: '';
             position: absolute;
             top: 1px; right: 0;
-            width: 2px; height: calc(100% - 1px);
-            background: linear-gradient(to bottom, #3c6d9d, #3c6d9d) 0 0 / 1px 100% no-repeat,
-                        linear-gradient(to bottom, #3c6d9d, #3c6d9d) 1px 1px / 1px calc(100% - 1px) no-repeat,
-                        linear-gradient(to bottom, #ffffff, #ffffff) 1px 0 / 1px 1px no-repeat;
+            width: 2px;
+            height: calc(100% - 1px);
+            background: 
+                linear-gradient(to bottom, #3c6d9d, #3c6d9d) 0 0 / 1px 100% no-repeat,
+                linear-gradient(to bottom, #3c6d9d, #3c6d9d) 1px 1px / 1px calc(100% - 1px) no-repeat,
+                linear-gradient(to bottom, #ffffff, #ffffff) 1px 0 / 1px 1px no-repeat;
             border-bottom-right-radius: 1px;
-        }
-        /* 性别选择 + 随机搭配 */
-        .control-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 22px;
-            flex-shrink: 0;
-        }
-        .gender-group {
-            display: flex;
-            gap: 2px;
-            box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px #084293, 2px 2px 4px rgba(0,0,0,0.2);
-            width: 180px; height: 44px;
-        }
-        .gender-btn {
-            flex: 1;
-            font-size: 16px;
-            background: linear-gradient(180deg, #feffff 0%, #ffffff 15%, #f5fffe 30%, #effffe 42%, #e9fffd 48%, #e5fffe 55%, #defdff 62%, #d5fdfd 70%, #cff8fd 78%, #c2f4fd 85%, #b5eefd 90%, #a8ebfe 95%, #8cdbfb 100%);
-            color: #0f3761;
-            border: none;
-            border-bottom: 2px solid #5a8ab8;
-            position: relative;
-            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-            font-weight: bold;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 4px;
-        }
-        .gender-btn:active { transform: scale(0.95); }
-        .gender-btn.active {
-            background: linear-gradient(180deg, #b8eafc 0%, #8edcfb 6%, #70d4f9 12%, #64d7fe 20%, #52cffe 30%, #40c5fe 40%, #2eb4fd 50%, #1da3f8 60%, #0f90f3 70%, #0786f0 78%, #047eeb 84%, #0171e1 90%, #0064d6 95%, #004db6 100%);
-            color: white;
-            box-shadow: 0 0 0 2px #ffffff;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-        }
-        .random-wrapper {
-            border-radius: 4px 4px 3px 3px;
-            box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px #084293;
-        }
-        .random-btn {
-            width: 120px; height: 44px;
-            font-size: 16px;
-            background: linear-gradient(180deg, #fff3b0 0%, #ffd54f 30%, #ffb300 55%, #ff8f00 75%, #e65100 100%);
-            color: white;
-            border: none;
-            border-bottom: 2px solid #855230;
-            border-radius: 4px 4px 3px 3px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .random-btn:active { transform: scale(0.95); }
-        /* 人物展示区 */
-        .avatar-frame {
-            margin: 0 16px;
-            border: 3px solid #1565c0;
-            border-radius: 6px;
-            background: white;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
-            height: 340px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            flex-shrink: 0;
-            position: relative;
-        }
-        .qq-show-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-        .qq-show-layer img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
-        /* 分类按钮 7列 */
-        .category-bar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
-            padding: 6px 16px 0;
-            flex-shrink: 0;
-        }
-        .category-wrapper {
-            border: 2px solid #022974;
-        }
-        .category-btn {
-            width: 100%; height: 100%;
-            font-size: 14px;
-            background: linear-gradient(180deg, #ffffff 0%, #ffffff 30%, #f5fffe 40%, #e8fdfd 48%, #dcf6fe 55%, #d0f2fd 62%, #c6edfd 70%, #bce8fd 78%, #b2e2fd 86%, #a6dffd 93%, #85c2ee 97%, #5fa8e0 100%);
-            border: none;
-            color: #0f3761;
-            font-weight: bold;
-            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-            cursor: pointer;
-            padding: 8px 2px;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .category-btn:active { transform: scale(0.95); }
-        .category-btn.active {
-            background: linear-gradient(180deg, #2489cd 0%, #68d4f8 3%, #70e8fe 6%, #51d1fe 9%, #4dcfff 12%, #49cbfe 15%, #42c3fe 18%, #3ebefd 21%, #36b6fe 24%, #2baefe 27%, #27a9fd 30%, #1ea4fd 33%, #189afe 36%, #1090fd 39%, #0c8cfa 42%, #0a88f7 45%, #0785f3 48%, #037fef 51%, #047def 54%, #017aeb 57%, #0277e8 60%, #0176e8 63%, #0073e8 66%, #0071e4 69%, #006adf 72%, #0067db 75%, #0065d8 78%, #0061d0 81%, #005ccd 84%, #0058c6 87%, #0054c3 90%, #004fb6 100%);
-            color: white;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-        }
-        /* 物品面板 */
-        .hair-panel {
-            background: white;
-            border: 1px solid #042d7b;
-            margin: 6px 16px 8px;
-            flex: 1;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .hair-header {
-            background: linear-gradient(180deg, #2489cd 0%, #68d4f8 3%, #70e8fe 6%, #51d1fe 9%, #4dcfff 12%, #49cbfe 15%, #42c3fe 18%, #3ebefd 21%, #36b6fe 24%, #2baefe 27%, #27a9fd 30%, #1ea4fd 33%, #189afe 36%, #1090fd 39%, #0c8cfa 42%, #0a88f7 45%, #0785f3 48%, #037fef 51%, #047def 54%, #017aeb 57%, #0277e8 60%, #0176e8 63%, #0073e8 66%, #0071e4 69%, #006adf 72%, #0067db 75%, #0065d8 78%, #0061d0 81%, #005ccd 84%, #0058c6 87%, #0054c3 90%, #004fb6 100%);
-            color: white;
-            height: 40px;
-            padding: 0 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 1px 2px rgba(0,0,0,0.15);
-            flex-shrink: 0;
-        }
-        .hair-title { font-size: 18px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
-        .clear-btn {
-            width: 80px; height: 32px;
-            font-size: 14px;
-            background: linear-gradient(180deg, #f0fafe 0%, #e7fbff 20%, #d0f0ff 40%, #a8dcfd 60%, #7cc4fc 75%, #54aefd 88%, #328fe5 100%);
-            color: #0f3761;
-            border: none;
-            border-bottom: 2px solid #0c4e9d;
-            position: relative;
-            font-weight: bold;
-            box-shadow: 0 0 0 2px #ffffff;
-            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 4px;
-        }
-        .clear-btn:active { transform: scale(0.95); }
-        .hair-body {
-            padding: 6px;
-            background: white;
-            flex: 1;
-            min-height: 0;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-        .hair-body::-webkit-scrollbar { width: 8px; }
-        .hair-body::-webkit-scrollbar-track { background: #f0f0f0; }
-        .hair-body::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 3px; }
-        /* 物品卡片 */
-        .item-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 4px;
-        }
-        .item-card {
-            position: relative;
-            padding: 4px;
-            border-radius: 8px;
-            cursor: pointer;
-            overflow: visible;
-        }
-        .item-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200' preserveAspectRatio='none'%3E%3Crect x='0.5' y='0.5' width='199' height='199' rx='10' ry='10' fill='none' stroke='%23effffe' stroke-width='1'/%3E%3Crect x='1.5' y='1.5' width='197' height='197' rx='9' ry='9' fill='none' stroke='%23d8f7fc' stroke-width='1'/%3E%3Crect x='2.5' y='2.5' width='195' height='195' rx='8' ry='8' fill='none' stroke='%23b7e7f5' stroke-width='1'/%3E%3Crect x='3.5' y='3.5' width='193' height='193' rx='7' ry='7' fill='none' stroke='%239fd9f1' stroke-width='1'/%3E%3Crect x='4.5' y='4.5' width='191' height='191' rx='6' ry='6' fill='none' stroke='%2397daf5' stroke-width='1'/%3E%3Crect x='5.5' y='5.5' width='189' height='189' rx='5' ry='5' fill='none' stroke='%2382c2de' stroke-width='1'/%3E%3Crect x='6.5' y='6.5' width='187' height='187' rx='4' ry='4' fill='none' stroke='%23679cbc' stroke-width='1'/%3E%3C/svg%3E");
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            z-index: 1;
-            pointer-events: none;
-        }
-        .item-card.selected::before { display: none; }
-        .item-card.selected {
-            padding: 4px;
-            background: white;
-            border-radius: 0;
-            box-shadow: inset 0 0 0 2px #01316a;
-            overflow: visible;
-        }
-        .item-inner {
-            position: relative;
-            z-index: 2;
-            background: linear-gradient(0deg, #e8f4f8 0%, #f0f8fa 25%, #f6fafc 50%, #fafdfe 75%, #fdfeff 100%);
-            padding: 4px;
-            border-radius: 3px;
-            margin: -1px;
-        }
-        .item-card.selected .item-inner {
-            background: linear-gradient(0deg, #d84315 0%, #fb8c00 30%, #ffa000 60%, #fff59d 100%);
-            padding: 4px;
-            border-radius: 0;
-            margin: -1px;
-        }
-        .item-thumb {
-            width: 100%;
-            height: 70px;
-            background: white;
-            border: 1px solid #c0c0c0;
-            overflow: hidden;
-        }
-        .item-thumb img {
-            width: 100%; height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-        .item-label {
-            padding: 12px 4px;
-            text-align: center;
-            font-size: 12px;
-            color: #0f3761;
-            font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .item-card.selected .item-label {
-            color: white;
-            text-shadow: 0 1px 1px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-left">
-                <img class="header-logo" src="assets/icons/qqshow_icon.PNG" onerror="this.style.display='none'">
-                <span class="header-title">QQ秀2000</span>
+    <div class="app-container" style="max-width: 672px; margin: 0 auto;">
+        <div class="header" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: center;">
+                <img src="assets/icons/qqshow_icon.PNG" alt="QQ logo" style="width: 40px; height: 40px; border-radius: 4px; margin-right: 8px;" onerror="this.style.display='none'">
+                <h1 style="font-weight: bold; font-size: 36px;">QQ秀2000</h1>
             </div>
-            <div class="header-right">
-                <button class="header-btn" onclick="location.reload()"><i class="fas fa-redo"></i></button>
-                <button class="header-btn" onclick="window._doRandom()"><i class="fas fa-download"></i></button>
-            </div>
-        </div>
-
-        <!-- 性别选择 + 随机搭配 -->
-        <div class="control-row">
-            <div class="gender-group">
-                <button class="gender-btn active" data-gender="female"><i class="fas fa-venus" style="font-size:12px;"></i> 女生</button>
-                <button class="gender-btn" data-gender="male"><i class="fas fa-mars" style="font-size:12px;"></i> 男生</button>
-            </div>
-            <div class="random-wrapper">
-                <button class="random-btn" onclick="window._doRandom()">随机搭配</button>
+            <div style="display: flex; gap: 8px;">
+                <button class="header-btn" style="display: flex; align-items: center; justify-content: center;" onclick="location.reload()">
+                    <i class="fas fa-redo"></i>
+                </button>
+                <button class="header-btn" style="display: flex; align-items: center; justify-content: center;" onclick="window._doRandom()">
+                    <i class="fas fa-download"></i>
+                </button>
             </div>
         </div>
-
-        <!-- 人物展示区 -->
-        <div class="avatar-frame" id="previewFrame"></div>
-
-        <!-- 分类按钮 -->
-        <div class="category-bar" id="categoryBar"></div>
-
-        <!-- 物品面板 -->
-        <div class="hair-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 0 22px;">
+            <div style="display: flex; gap: 2px; border-radius: 0; box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px #084293, 2px 2px 4px rgba(0,0,0,0.2); width: 210.5px; height: 63px;">
+                <div class="tab-wrapper">
+                    <button class="tab-button active" data-gender="female">
+                        <i class="fas fa-venus" style="font-size: 14px; margin-right: 4px;"></i> 女生
+                    </button>
+                </div>
+                <div class="tab-wrapper">
+                    <button class="tab-button" data-gender="male">
+                        <i class="fas fa-mars" style="font-size: 14px; margin-right: 4px;"></i> 男生
+                    </button>
+                </div>
+            </div>
+            <div class="button-wrapper">
+                <button class="random-button" style="padding: 8px 24px; font-weight: bold;" onclick="window._doRandom()">随机搭配</button>
+            </div>
+        </div>
+        <div class="avatar-frame" style="padding: 16px; margin-bottom: 8px; margin-left: 16px; margin-right: 16px;" id="previewFrame"></div>
+        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 0; padding: 0 8px 0 16px; max-height: 130px; overflow-y: auto;" id="categoryBar"></div>
+        <div class="hair-panel" style="margin-left: 16px; margin-right: 16px; margin-bottom: 16px;">
             <div class="hair-header">
-                <span class="hair-title" id="panelTitle">发型</span>
-                <button class="clear-btn" onclick="window._doClear()"><i class="fas fa-trash"></i> 清空</button>
+                <h2 style="font-weight: bold; font-size: 32px;" id="panelTitle">发型</h2>
+                <button class="clear-btn" style="display: flex; align-items: center;" onclick="window._doClear()">
+                    <i class="fas fa-trash" style="margin-right: 4px;"></i> 清空
+                </button>
             </div>
-            <div class="hair-body">
-                <div class="item-grid" id="itemGrid"></div>
+            <div class="hair-content">
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;" id="itemGrid"></div>
             </div>
         </div>
     </div>
-
     <script>
         var fs = require('fs');
         var path = require('path');
-
         var LAYER_ORDER = {
             'backgrounds': 0, 'background-decor': 1, 'vehicle': 2, 'wings': 3,
             'back-hair': 4, 'bottom': 5, 'top': 7, 'outfit': 8, 'makeup': 9,
@@ -356,7 +544,6 @@
             'face-decor': 13, 'glasses': 14, 'headwear': 15, 'other-accessories': 16,
             'frame': 17, 'text': 18, 'companion': 19, 'sparkle': 20
         };
-
         var CATEGORIES = [
             { id: 'backgrounds', name: '背景' },
             { id: 'front-hair', name: '发型' },
@@ -364,33 +551,27 @@
             { id: 'bottom', name: '下装' },
             { id: 'outfit', name: '套装' },
             { id: 'other-accessories', name: '配饰' },
-            { id: 'text', name: '文字' }
-        ];
-
-        var ALL_CATEGORIES = [
-            { id: 'backgrounds', name: '背景' },
-            { id: 'makeup', name: '妆容' },
-            { id: 'face-decor', name: '脸饰' },
-            { id: 'front-hair', name: '发型' },
+            { id: 'text', name: '文字' },
             { id: 'back-hair', name: '后发' },
-            { id: 'top', name: '上衣' },
-            { id: 'bottom', name: '下装' },
-            { id: 'outfit', name: '套装' },
+            { id: 'background-decor', name: '背饰' },
             { id: 'headwear', name: '帽子' },
-            { id: 'head-set', name: '头饰' },
             { id: 'glasses', name: '眼镜' },
-            { id: 'neckwear', name: '颈饰' },
+            { id: 'head-set', name: '头饰' },
             { id: 'earrings', name: '耳环' },
+            { id: 'neckwear', name: '颈饰' },
+            { id: 'face-decor', name: '脸饰' },
+            { id: 'makeup', name: '妆容' },
+            { id: 'companion', name: '伴侣' },
+            { id: 'vehicle', name: '载具' },
             { id: 'wings', name: '翅膀' },
-            { id: 'other-accessories', name: '配饰' },
-            { id: 'text', name: '文字' }
+            { id: 'sparkle', name: '闪光' },
+            { id: 'frame', name: '相框' },
+            { id: 'fonts', name: '字体' }
         ];
-
         var currentGender = 'female';
-        var currentCategory = 'front-hair';
+        var currentCategory = 'backgrounds';
         var selections = {};
         var assetCache = {};
-
         function loadAssets(categoryId) {
             if (assetCache[categoryId]) return assetCache[categoryId];
             var dir = path.join(__dirname, 'assets', categoryId);
@@ -401,7 +582,6 @@
             assetCache[categoryId] = defaults.concat(others);
             return assetCache[categoryId];
         }
-
         function buildTabs() {
             var bar = document.getElementById('categoryBar');
             bar.innerHTML = '';
@@ -409,18 +589,16 @@
                 var wrapper = document.createElement('div');
                 wrapper.className = 'category-wrapper';
                 var btn = document.createElement('button');
-                btn.className = 'category-btn' + (cat.id === currentCategory ? ' active' : '');
+                btn.className = 'category-button' + (cat.id === currentCategory ? ' active' : '');
                 btn.textContent = cat.name;
-                btn.setAttribute('data-cat', cat.id);
                 btn.addEventListener('click', function() { selectCategory(cat.id); });
                 wrapper.appendChild(btn);
                 bar.appendChild(wrapper);
             });
         }
-
         function selectCategory(categoryId) {
             currentCategory = categoryId;
-            var btns = document.querySelectorAll('.category-btn');
+            var btns = document.querySelectorAll('.category-button');
             CATEGORIES.forEach(function(cat, i) {
                 if (btns[i]) btns[i].classList.toggle('active', cat.id === categoryId);
             });
@@ -428,83 +606,83 @@
             if (cat) document.getElementById('panelTitle').textContent = cat.name;
             renderItems();
         }
-
         function selectItem(categoryId, file) {
             selections[categoryId] = file;
             if (categoryId === 'outfit') { delete selections['top']; delete selections['bottom']; }
             if (categoryId === 'top' || categoryId === 'bottom') { delete selections['outfit']; }
             if (categoryId === 'front-hair') {
                 var backFile = file.replace('front-hair', 'back-hair');
-                var backDir = path.join(__dirname, 'assets', 'back-hair');
-                if (fs.existsSync(path.join(backDir, backFile))) { selections['back-hair'] = backFile; }
+                if (fs.existsSync(path.join(__dirname, 'assets', 'back-hair', backFile))) { selections['back-hair'] = backFile; }
                 else { delete selections['back-hair']; }
             }
             if (categoryId === 'back-hair') {
                 var frontFile = file.replace('back-hair', 'front-hair');
-                var frontDir = path.join(__dirname, 'assets', 'front-hair');
-                if (fs.existsSync(path.join(frontDir, frontFile))) { selections['front-hair'] = frontFile; }
+                if (fs.existsSync(path.join(__dirname, 'assets', 'front-hair', frontFile))) { selections['front-hair'] = frontFile; }
                 else { delete selections['front-hair']; }
             }
             renderItems();
             renderAvatar();
         }
-
         function renderItems() {
             var grid = document.getElementById('itemGrid');
             grid.innerHTML = '';
             var files = loadAssets(currentCategory);
             files.forEach(function(file) {
-                var card = document.createElement('div');
                 var isDefault = file.indexOf('default') === 0;
-                card.className = 'item-card' + (selections[currentCategory] === file ? ' selected' : '');
+                var option = document.createElement('div');
+                option.className = 'hair-option' + (selections[currentCategory] === file ? ' selected' : '');
                 var inner = document.createElement('div');
-                inner.className = 'item-inner';
-                var thumb = document.createElement('div');
-                thumb.className = 'item-thumb';
+                inner.className = 'hair-inner';
+                var imgDiv = document.createElement('div');
+                imgDiv.className = 'hair-img';
                 var img = document.createElement('img');
                 img.src = path.join(__dirname, 'assets', currentCategory, file);
-                thumb.appendChild(img);
-                inner.appendChild(thumb);
+                imgDiv.appendChild(img);
+                inner.appendChild(imgDiv);
                 var label = document.createElement('div');
-                label.className = 'item-label';
+                label.className = 'label';
                 label.textContent = isDefault ? '无' : file.replace(/\.(gif|png)$/, '');
                 inner.appendChild(label);
-                card.appendChild(inner);
-                card.addEventListener('click', function() { selectItem(currentCategory, file); });
-                grid.appendChild(card);
+                option.appendChild(inner);
+                option.addEventListener('click', function() { selectItem(currentCategory, file); });
+                grid.appendChild(option);
             });
         }
-
-        function clearCategory() { delete selections[currentCategory]; renderItems(); renderAvatar(); }
-
+        function clearCategory() { initSelections(); renderItems(); renderAvatar(); }
         function renderAvatar() {
             var frame = document.getElementById('previewFrame');
             frame.innerHTML = '';
             Object.keys(LAYER_ORDER).forEach(function(catId) {
                 if (!selections[catId]) return;
-                var file = selections[catId];
                 var div = document.createElement('div');
                 div.className = 'qq-show-layer';
                 div.style.zIndex = LAYER_ORDER[catId];
                 var img = document.createElement('img');
-                img.src = path.join(__dirname, 'assets', catId, file);
+                img.src = path.join(__dirname, 'assets', catId, selections[catId]);
                 div.appendChild(img);
                 frame.appendChild(div);
             });
         }
-
         function randomOutfit() {
             selections = {};
             CATEGORIES.forEach(function(cat) {
                 var files = loadAssets(cat.id);
-                if (files.length > 0 && Math.random() > 0.3) {
-                    selections[cat.id] = files[Math.floor(Math.random() * files.length)];
+                var nonDefault = files.filter(function(f) { return f.indexOf('default') !== 0; });
+                if (nonDefault.length > 0) {
+                    selections[cat.id] = nonDefault[Math.floor(Math.random() * nonDefault.length)];
+                } else if (files.length > 0) {
+                    selections[cat.id] = files[0];
                 }
             });
+            if (selections['front-hair']) {
+                var backFile = selections['front-hair'].replace('front-hair', 'back-hair');
+                if (fs.existsSync(path.join(__dirname, 'assets', 'back-hair', backFile))) {
+                    selections['back-hair'] = backFile;
+                }
+            }
             renderItems();
             renderAvatar();
         }
-
         function initSelections() {
             selections = {};
             CATEGORIES.forEach(function(cat) {
@@ -513,13 +691,11 @@
                 if (defaultFile) selections[cat.id] = defaultFile;
             });
         }
-
         window._doRandom = randomOutfit;
         window._doClear = clearCategory;
-
-        document.querySelectorAll('.gender-btn').forEach(function(tab) {
+        document.querySelectorAll('.tab-button').forEach(function(tab) {
             tab.addEventListener('click', function() {
-                document.querySelectorAll('.gender-btn').forEach(function(t) { t.classList.remove('active'); });
+                document.querySelectorAll('.tab-button').forEach(function(t) { t.classList.remove('active'); });
                 tab.classList.add('active');
                 currentGender = tab.getAttribute('data-gender');
                 assetCache = {};
@@ -528,7 +704,6 @@
                 renderAvatar();
             });
         });
-
         buildTabs();
         initSelections();
         renderItems();
