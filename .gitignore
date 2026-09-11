@@ -1,7 +1,7 @@
 *.obj
 *.pdb
 *.ilk
-QQShow2000.exe
+*.exe
 WebView2Loader.dll
 webview2/
 webview2.nupkg
@@ -10,3 +10,6 @@ test.html
 package.json
 assets/screenshots/
 QQShow2000.exe.WebView2/
+webview2_data/
+build.bat
+build_gdi.bat

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QQ秀2000</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link rel="stylesheet" href="assets/font-awesome.min.css"></link>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -23,7 +23,6 @@
             overflow: hidden;
         }
         .header {
-            -webkit-app-region: drag;
             background: linear-gradient(180deg,
                 #2489cd 0%,
                 #68d4f8 3%,
@@ -449,10 +448,10 @@
                 <h1 style="font-weight: bold; font-size: 32px;">QQ秀2000</h1>
             </div>
             <div style="display: flex; gap: 14px;">
-                <button class="header-btn" style="display: flex; align-items: center; justify-content: center;" onclick="window._doSave()">
+                <button class="header-btn" style="display: flex; align-items: center; justify-content: center; -webkit-app-region: no-drag;" onclick="window._doSave()">
                     <i class="fas fa-download"></i>
                 </button>
-                <button class="header-btn" style="display: flex; align-items: center; justify-content: center;" onclick="window.close()">
+                <button class="header-btn" id="closeBtn" style="display: flex; align-items: center; justify-content: center; -webkit-app-region: no-drag;">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -717,6 +716,12 @@
             }).catch(function() { startApp(); });
         } else {
             startApp();
+        }
+        // WebView2 close button
+        if (window.chrome && window.chrome.webview) {
+            var wv = window.chrome.webview;
+            var closeBtn = document.getElementById('closeBtn');
+            if (closeBtn) closeBtn.addEventListener('click', function() { wv.postMessage('close'); });
         }
     </script>
 </body>
