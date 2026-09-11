@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ秀2000</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei UI', 'Microsoft YaHei', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+            background-color: #d6e4ff;
+            zoom: 0.4;
+            user-select: none;
+        }
+        .app-container {
+            background-color: white;
+            border: 3px solid #1565c0;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            padding-bottom: 4px;
+            height: 1163px;
+            overflow: hidden;
+        }
+        .header {
+            -webkit-app-region: drag;
+            background: linear-gradient(180deg,
+                #2489cd 0%,
+                #68d4f8 3%,
+                #70e8fe 6%,
+                #51d1fe 9%,
+                #4dcfff 12%,
+                #49cbfe 15%,
+                #42c3fe 18%,
+                #3ebefd 21%,
+                #36b6fe 24%,
+                #2baefe 27%,
+                #27a9fd 30%,
+                #1ea4fd 33%,
+                #189afe 36%,
+                #1090fd 39%,
+                #0c8cfa 42%,
+                #0a88f7 45%,
+                #0785f3 48%,
+                #037fef 51%,
+                #047def 54%,
+                #017aeb 57%,
+                #0277e8 60%,
+                #0176e8 63%,
+                #0073e8 66%,
+                #0071e4 69%,
+                #006adf 72%,
+                #0067db 75%,
+                #0065d8 78%,
+                #0061d0 81%,
+                #005ccd 84%,
+                #0058c6 87%,
+                #0054c3 90%,
+                #004fb6 93%,
+                #0a58a0 96%,
+                #0d65b8 100%
+            );
+            color: white;
+            height: 77px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid #042d7b;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .tab-button {
+            width: 100%;
+            height: 100%;
+            font-size: 24px;
+            background: linear-gradient(180deg, #feffff 0%, #ffffff 15%, #f5fffe 30%, #effffe 42%, #e9fffd 48%, #e5fffe 55%, #defdff 62%, #d5fdfd 70%, #cff8fd 78%, #c2f4fd 85%, #b5eefd 90%, #a8ebfe 95%, #8cdbfb 100%);
+            color: #0f3761;
+            border: none;
+            border-radius: 8px;
+            position: relative;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0s;
+        }
+        .tab-wrapper {
+            display: inline-block;
+            position: relative;
+            flex: 1;
+            height: 100%;
+        }
+        .tab-wrapper:active .tab-button {
+            transform: scale(0.95);
+        }
+        .tab-button.active {
+            background: linear-gradient(180deg, #b8eafc 0%, #8edcfb 6%, #70d4f9 12%, #64d7fe 20%, #52cffe 30%, #40c5fe 40%, #2eb4fd 50%, #1da3f8 60%, #0f90f3 70%, #0786f0 78%, #047eeb 84%, #0171e1 90%, #0064d6 95%, #004db6 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 0 0 2px #ffffff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+            cursor: pointer;
+        }
+        .category-button {
+            font-size: 24px;
+            background: linear-gradient(180deg,
+                #ffffff 0%,
+                #ffffff 30%,
+                #f5fffe 40%,
+                #e8fdfd 48%,
+                #dcf6fe 55%,
+                #d0f2fd 62%,
+                #c6edfd 70%,
+                #bce8fd 78%,
+                #b2e2fd 86%,
+                #a6dffd 93%,
+                #85c2ee 97%,
+                #5fa8e0 100%
+            );
+            border: none;
+            border-radius: 8px;
+            color: #0f3761;
+            box-shadow: none;
+            font-weight: bold;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+            cursor: pointer;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            transition: transform 0s;
+        }
+        .category-button.active {
+            background: linear-gradient(180deg,
+                #2489cd 0%,
+                #68d4f8 3%,
+                #70e8fe 6%,
+                #51d1fe 9%,
+                #4dcfff 12%,
+                #49cbfe 15%,
+                #42c3fe 18%,
+                #3ebefd 21%,
+                #36b6fe 24%,
+                #2baefe 27%,
+                #27a9fd 30%,
+                #1ea4fd 33%,
+                #189afe 36%,
+                #1090fd 39%,
+                #0c8cfa 42%,
+                #0a88f7 45%,
+                #0785f3 48%,
+                #037fef 51%,
+                #047def 54%,
+                #017aeb 57%,
+                #0277e8 60%,
+                #0176e8 63%,
+                #0073e8 66%,
+                #0071e4 69%,
+                #006adf 72%,
+                #0067db 75%,
+                #0065d8 78%,
+                #0061d0 81%,
+                #005ccd 84%,
+                #0058c6 87%,
+                #0054c3 90%,
+                #004fb6 100%
+            );
+            color: white;
+            border: none;
+            box-shadow: none;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+        .category-wrapper {
+            display: inline-block;
+            border: 2px solid #022974;
+            border-radius: 8px;
+            width: 100%;
+            height: 65px;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        .category-wrapper:active .category-button {
+            transform: scale(0.95);
+        }
+        .random-button {
+            width: 100%;
+            height: 100%;
+            font-size: 22px;
+            background: linear-gradient(180deg,
+                #fff3b0 0%,
+                #ffd54f 30%,
+                #ffb300 55%,
+                #ff8f00 75%,
+                #e65100 100%
+            );
+            color: white;
+            border: none;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0s;
+        }
+        .random-button::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            right: 0;
+            width: 2px;
+            height: calc(100% - 1px);
+            background: 
+                linear-gradient(to bottom, #855230, #855230) 0 0 / 1px 100% no-repeat,
+                linear-gradient(to bottom, #855230, #855230) 1px 1px / 1px calc(100% - 1px) no-repeat;
+            border-bottom-right-radius: 1px;
+        }
+        .button-wrapper {
+            display: inline-block;
+            border-radius: 8px;
+            box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px #084293;
+            width: 165px;
+            height: 58px;
+        }
+        .button-wrapper:active .random-button {
+            transform: scale(0.95);
+        }
+        .hair-panel {
+            background: white;
+            border: 1px solid #042d7b;
+            border-radius: 0;
+            margin-top: 8px;
+        }
+        .hair-header {
+            background: linear-gradient(180deg,
+                #2489cd 0%,
+                #68d4f8 3%,
+                #70e8fe 6%,
+                #51d1fe 9%,
+                #4dcfff 12%,
+                #49cbfe 15%,
+                #42c3fe 18%,
+                #3ebefd 21%,
+                #36b6fe 24%,
+                #2baefe 27%,
+                #27a9fd 30%,
+                #1ea4fd 33%,
+                #189afe 36%,
+                #1090fd 39%,
+                #0c8cfa 42%,
+                #0a88f7 45%,
+                #0785f3 48%,
+                #037fef 51%,
+                #047def 54%,
+                #017aeb 57%,
+                #0277e8 60%,
+                #0176e8 63%,
+                #0073e8 66%,
+                #0071e4 69%,
+                #006adf 72%,
+                #0067db 75%,
+                #0065d8 78%,
+                #0061d0 81%,
+                #005ccd 84%,
+                #0058c6 87%,
+                #0054c3 90%,
+                #0a58a0 100%
+            );
+            color: white;
+            height: 77px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 1px 2px rgba(0,0,0,0.15);
+        }
+        .hair-header h2 {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+        .hair-content {
+            padding: 8px;
+            background: white;
+            height: 400px !important;
+            overflow-y: auto !important;
+        }
+        .hair-content::-webkit-scrollbar { width: 8px; }
+        .hair-content::-webkit-scrollbar-track { background: #f0f0f0; }
+        .hair-content::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 3px; }
+        #categoryBar::-webkit-scrollbar { width: 16px; }
+        #categoryBar::-webkit-scrollbar-track { background: #d0d8e8; border-radius: 6px; margin: 2px; }
+        #categoryBar::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #4a9de0, #1565c0); border-radius: 6px; border: 3px solid #d0d8e8; }
+        #categoryBar::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #2196f3, #0d47a1); }
+        .hair-option {
+            position: relative;
+            padding: 6px;
+            border-radius: 10px;
+            margin: 0;
+            overflow: visible;
+            cursor: pointer;
+            outline: none;
+        }
+        .hair-option::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27200%27%20height%3D%27200%27%20viewBox%3D%270%200%20200%20200%27%20preserveAspectRatio%3D%27none%27%3E%3Crect%20x%3D%270.5%27%20y%3D%270.5%27%20width%3D%27199%27%20height%3D%27199%27%20rx%3D%2710%27%20ry%3D%2710%27%20fill%3D%27none%27%20stroke%3D%27%23effffe%27%20stroke-width%3D%271%27%2F%3E%3Crect%20x%3D%271.5%27%20y%3D%271.5%27%20width%3D%27197%27%20height%3D%27197%27%20rx%3D%279%27%20ry%3D%279%27%20fill%3D%27none%27%20stroke%3D%27%23d8f7fc%27%20stroke-width%3D%271%27%2F%3E%3Crect%20x%3D%272.5%27%20y%3D%272.5%27%20width%3D%27195%27%20height%3D%27195%27%20rx%3D%278%27%20ry%3D%278%27%20fill%3D%27none%27%20stroke%3D%27%23b7e7f5%27%20stroke-width%3D%271%27%2F%3E%3Crect%20x%3D%273.5%27%20y%3D%273.5%27%20width%3D%27193%27%20height%3D%27193%27%20rx%3D%277%27%20ry%3D%277%27%20fill%3D%27none%27%20stroke%3D%27%239fd9f1%27%20stroke-width%3D%271%27%2F%3E%3Crect%20x%3D%274.5%27%20y%3D%274.5%27%20width%3D%27191%27%20height%3D%27191%27%20rx%3D%276%27%20ry%3D%276%27%20fill%3D%27none%27%20stroke%3D%27%2397daf5%27%20stroke-width%3D%271%27%2F%3E%3Crect%20x%3D%275.5%27%20y%3D%275.5%27%20width%3D%27189%27%20height%3D%27189%27%20rx%3D%275%27%20ry%3D%275%27%20fill%3D%27none%27%20stroke%3D%27%2382c2de%27%20stroke-width%3D%271%27%2F%3E%3Crect%20x%3D%276.5%27%20y%3D%276.5%27%20width%3D%27187%27%20height%3D%27187%27%20rx%3D%274%27%20ry%3D%274%27%20fill%3D%27none%27%20stroke%3D%27%23679cbc%27%20stroke-width%3D%271%27%2F%3E%3C%2Fsvg%3E");
+            background-size: 100% 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .hair-option.selected::before { display: none; }
+        .hair-option.selected {
+            padding: 6px;
+            background: white;
+            border-radius: 0 !important;
+            margin: 0;
+            box-shadow: inset 0 0 0 2px #01316a;
+        }
+        .hair-option .hair-inner {
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(0deg, 
+                #e8f4f8 0%, 
+                #f0f8fa 25%, 
+                #f6fafc 50%, 
+                #fafdfe 75%, 
+                #fdfeff 100%
+            );
+            padding: 6px;
+            border-radius: 3px;
+            margin: -1px;
+        }
+        .hair-option.selected .hair-inner {
+            background: linear-gradient(0deg, #d84315 0%, #fb8c00 30%, #ffa000 60%, #fff59d 100%);
+            padding: 6px;
+            border-radius: 0 !important;
+            margin: -1px;
+        }
+        .hair-img {
+            width: 100%;
+            height: 100px;
+            background: white;
+            border: 1px solid #c0c0c0;
+        }
+        .hair-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .hair-option .label {
+            padding: 20px 6px;
+            text-align: center;
+            font-size: 16px;
+            color: #0f3761;
+            font-weight: bold;
+            background: transparent;
+            border-top: none;
+        }
+        .hair-option.selected .label {
+            background: transparent;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+            border-top: none;
+        }
+        .clear-btn {
+            width: 105px;
+            height: 55px;
+            font-size: 24px;
+            background: linear-gradient(180deg,
+                #f0fafe 0%,
+                #e7fbff 20%,
+                #d0f0ff 40%,
+                #a8dcfd 60%,
+                #7cc4fc 75%,
+                #54aefd 88%,
+                #328fe5 100%
+            );
+            color: #0f3761;
+            border: none;
+            border-radius: 8px;
+            position: relative;
+            font-weight: bold;
+            padding: 4px 12px;
+            box-shadow: 0 0 0 3px #ffffff;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: transform 0s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .clear-btn:active { transform: scale(0.95); }
+        .avatar-frame {
+            border: 3px solid #1565c0;
+            border-radius: 6px;
+            background: white;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+            min-height: 555px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .qq-show-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .qq-show-layer img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
+        .header-btn {
+            -webkit-app-region: no-drag;
+            width: 55px;
+            height: 52.5px;
+            font-size: 24px;
+            background: linear-gradient(180deg,
+                #f0fafe 0%,
+                #e7fbff 20%,
+                #d0f0ff 40%,
+                #a8dcfd 60%,
+                #7cc4fc 75%,
+                #54aefd 88%,
+                #328fe5 100%
+            );
+            color: #0f3761;
+            border: none;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 0 0 3px #ffffff, 0 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: transform 0s;
+        }
+        .header-btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+    <div class="app-container" style="max-width: 672px; margin: 0 auto;">
+        <div class="header" style="margin-bottom: 16px;">
+            <div style="display: flex; align-items: center;">
+                <img src="assets/icons/qqshow_icon.PNG" alt="QQ logo" style="width: 40px; height: 40px; border-radius: 4px; margin-right: 8px;" onerror="this.style.display='none'">
+                <h1 style="font-weight: bold; font-size: 32px;">QQ秀2000</h1>
+            </div>
+            <div style="display: flex; gap: 14px;">
+                <button class="header-btn" style="display: flex; align-items: center; justify-content: center;" onclick="window._doSave()">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button class="header-btn" style="display: flex; align-items: center; justify-content: center;" onclick="window.close()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 0 22px;">
+            <div style="display: flex; gap: 2px; border-radius: 0; box-shadow: 0 0 0 3px #ffffff, 0 0 0 6px #084293, 2px 2px 4px rgba(0,0,0,0.2); width: 210.5px; height: 63px;">
+                <div class="tab-wrapper">
+                    <button class="tab-button active" data-gender="female">
+                        <i class="fas fa-venus" style="font-size: 14px; margin-right: 4px;"></i> 女生
+                    </button>
+                </div>
+                <div class="tab-wrapper">
+                    <button class="tab-button" data-gender="male">
+                        <i class="fas fa-mars" style="font-size: 14px; margin-right: 4px;"></i> 男生
+                    </button>
+                </div>
+            </div>
+            <div class="button-wrapper">
+                <button class="random-button" style="padding: 8px 24px; font-weight: bold;" onclick="window._doRandom()">随机搭配</button>
+            </div>
+        </div>
+        <div class="avatar-frame" style="padding: 16px; margin-bottom: 8px; margin-left: 16px; margin-right: 16px;" id="previewFrame"></div>
+        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 0; padding: 0 8px 0 16px; max-height: 130px; overflow-y: auto;" id="categoryBar"></div>
+        <div class="hair-panel" style="margin-left: 16px; margin-right: 16px; margin-bottom: 16px;">
+            <div class="hair-header">
+                <h2 style="font-weight: bold; font-size: 32px;" id="panelTitle">发型</h2>
+                <button class="clear-btn" style="display: flex; align-items: center;" onclick="window._doClear()">
+                    <i class="fas fa-trash" style="margin-right: 4px;"></i> 清空
+                </button>
+            </div>
+            <div class="hair-content">
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;" id="itemGrid"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var isElectron = (typeof require !== 'undefined');
+        var fs = isElectron ? require('fs') : null;
+        var path = isElectron ? require('path') : null;
+        var LAYER_ORDER = {
+            'backgrounds': 0, 'background-decor': 1, 'vehicle': 2, 'wings': 3,
+            'back-hair': 4, 'bottom': 5, 'top': 7, 'outfit': 8, 'makeup': 9,
+            'head-set': 10, 'front-hair': 11, 'neckwear': 11, 'earrings': 12,
+            'face-decor': 13, 'glasses': 14, 'headwear': 15, 'other-accessories': 16,
+            'frame': 17, 'text': 18, 'companion': 19, 'sparkle': 20
+        };
+        var CATEGORIES = [
+            { id: 'backgrounds', name: '背景' },
+            { id: 'front-hair', name: '发型' },
+            { id: 'top', name: '上衣' },
+            { id: 'bottom', name: '下装' },
+            { id: 'outfit', name: '套装' },
+            { id: 'other-accessories', name: '配饰' },
+            { id: 'text', name: '文字' },
+
+            { id: 'back-hair', name: '后发' },
+            { id: 'background-decor', name: '背饰' },
+            { id: 'headwear', name: '帽子' },
+            { id: 'glasses', name: '眼镜' },
+            { id: 'head-set', name: '头饰' },
+            { id: 'earrings', name: '耳环' },
+            { id: 'neckwear', name: '颈饰' },
+            { id: 'face-decor', name: '脸饰' },
+            { id: 'makeup', name: '妆容' },
+            { id: 'companion', name: '伴侣' },
+            { id: 'vehicle', name: '载具' },
+            { id: 'wings', name: '翅膀' },
+            { id: 'sparkle', name: '闪光' },
+            { id: 'frame', name: '相框' }
+        ];
+        var currentGender = 'female';
+        var currentCategory = 'backgrounds';
+        var selections = {};
+        function getAssetPath(catId, file) {
+            return 'assets/' + catId + '/' + file;
+        }
+        function fileExists(catId, file) {
+            if (isElectron) return fs.existsSync(path.join(__dirname, 'assets', catId, file));
+            var list = fileManifest && fileManifest[catId] ? fileManifest[catId] : [];
+            return list.indexOf(file) !== -1;
+        }
+        var assetCache = {};
+        var fileManifest = null;
+        function loadAssets(categoryId) {
+            if (assetCache[categoryId]) return assetCache[categoryId];
+            if (isElectron) {
+                var dir = path.join(__dirname, 'assets', categoryId);
+                if (!fs.existsSync(dir)) { assetCache[categoryId] = []; return []; }
+                var files = fs.readdirSync(dir).filter(function(f) { return f.endsWith('.gif') || f.endsWith('.png'); });
+                var defaults = files.filter(function(f) { return f.indexOf('default') === 0; });
+                var others = files.filter(function(f) { return f.indexOf('default') !== 0; });
+                assetCache[categoryId] = defaults.concat(others);
+            } else {
+                assetCache[categoryId] = (fileManifest && fileManifest[categoryId]) ? fileManifest[categoryId] : [];
+            }
+            return assetCache[categoryId];
+        }
+        function buildTabs() {
+            var bar = document.getElementById('categoryBar');
+            bar.innerHTML = '';
+            CATEGORIES.forEach(function(cat) {
+                var wrapper = document.createElement('div');
+                wrapper.className = 'category-wrapper';
+                var btn = document.createElement('button');
+                btn.className = 'category-button' + (cat.id === currentCategory ? ' active' : '');
+                btn.textContent = cat.name;
+                btn.addEventListener('click', function() { selectCategory(cat.id); });
+                wrapper.appendChild(btn);
+                bar.appendChild(wrapper);
+            });
+        }
+        function selectCategory(categoryId) {
+            currentCategory = categoryId;
+            var btns = document.querySelectorAll('.category-button');
+            CATEGORIES.forEach(function(cat, i) {
+                if (btns[i]) btns[i].classList.toggle('active', cat.id === categoryId);
+            });
+            var cat = CATEGORIES.find(function(c) { return c.id === categoryId; });
+            if (cat) document.getElementById('panelTitle').textContent = cat.name;
+            renderItems();
+        }
+        function selectItem(categoryId, file) {
+            selections[categoryId] = file;
+            if (categoryId === 'outfit') { delete selections['top']; delete selections['bottom']; }
+            if (categoryId === 'top' || categoryId === 'bottom') { delete selections['outfit']; }
+            if (categoryId === 'front-hair') {
+                var backFile = file.replace('front-hair', 'back-hair');
+                if (fileExists('back-hair', backFile)) { selections['back-hair'] = backFile; }
+                else { delete selections['back-hair']; }
+            }
+            if (categoryId === 'back-hair') {
+                var frontFile = file.replace('back-hair', 'front-hair');
+                if (fileExists('front-hair', frontFile)) { selections['front-hair'] = frontFile; }
+                else { delete selections['front-hair']; }
+            }
+            renderItems();
+            renderAvatar();
+        }
+        function renderItems() {
+            var grid = document.getElementById('itemGrid');
+            grid.innerHTML = '';
+            var files = loadAssets(currentCategory);
+            files.forEach(function(file) {
+                var isDefault = file.indexOf('default') === 0;
+                var option = document.createElement('div');
+                option.className = 'hair-option' + (selections[currentCategory] === file ? ' selected' : '');
+                var inner = document.createElement('div');
+                inner.className = 'hair-inner';
+                var imgDiv = document.createElement('div');
+                imgDiv.className = 'hair-img';
+                var img = document.createElement('img');
+                img.src = getAssetPath(currentCategory, file);
+                imgDiv.appendChild(img);
+                inner.appendChild(imgDiv);
+                var label = document.createElement('div');
+                label.className = 'label';
+                label.textContent = isDefault ? '无' : file.replace(/\.(gif|png)$/, '');
+                inner.appendChild(label);
+                option.appendChild(inner);
+                option.addEventListener('click', function() { selectItem(currentCategory, file); });
+                grid.appendChild(option);
+            });
+        }
+        function clearCategory() { initSelections(); renderItems(); renderAvatar(); }
+        function renderAvatar() {
+            var frame = document.getElementById('previewFrame');
+            frame.innerHTML = '';
+            Object.keys(LAYER_ORDER).forEach(function(catId) {
+                if (!selections[catId]) return;
+                var div = document.createElement('div');
+                div.className = 'qq-show-layer';
+                div.style.zIndex = LAYER_ORDER[catId];
+                var img = document.createElement('img');
+                img.src = getAssetPath(catId, selections[catId]);
+                div.appendChild(img);
+                frame.appendChild(div);
+            });
+        }
+        function randomOutfit() {
+            selections = {};
+            CATEGORIES.forEach(function(cat) {
+                var files = loadAssets(cat.id);
+                var nonDefault = files.filter(function(f) { return f.indexOf('default') !== 0; });
+                if (nonDefault.length > 0) {
+                    selections[cat.id] = nonDefault[Math.floor(Math.random() * nonDefault.length)];
+                } else if (files.length > 0) {
+                    selections[cat.id] = files[0];
+                }
+            });
+            if (selections['front-hair']) {
+                var backFile = selections['front-hair'].replace('front-hair', 'back-hair');
+                if (fileExists('back-hair', backFile)) {
+                    selections['back-hair'] = backFile;
+                }
+            }
+            renderItems();
+            renderAvatar();
+        }
+        function initSelections() {
+            selections = {};
+            CATEGORIES.forEach(function(cat) {
+                var files = loadAssets(cat.id);
+                var defaultFile = files.find(function(f) { return f.indexOf('default') === 0; });
+                if (defaultFile) selections[cat.id] = defaultFile;
+            });
+        }
+        window._doRandom = randomOutfit;
+        window._doClear = clearCategory;
+        window._doSave = function() {
+            var frame = document.getElementById('previewFrame');
+            var canvas = document.createElement('canvas');
+            canvas.width = 672;
+            canvas.height = 555;
+            var ctx = canvas.getContext('2d');
+            var images = frame.querySelectorAll('img');
+            var loaded = 0;
+            if (images.length === 0) { alert('没有内容可保存'); return; }
+            var tempCanvas = document.createElement('canvas');
+            tempCanvas.width = 672;
+            tempCanvas.height = 555;
+            var tempCtx = tempCanvas.getContext('2d');
+            images.forEach(function(img) {
+                var layerImg = new Image();
+                layerImg.crossOrigin = 'anonymous';
+                layerImg.onload = function() {
+                    tempCtx.clearRect(0, 0, 672, 555);
+                    tempCtx.drawImage(layerImg, 0, 0, 672, 555);
+                    ctx.drawImage(tempCanvas, 0, 0);
+                    loaded++;
+                    if (loaded === images.length) {
+                        var dataUrl = canvas.toDataURL('image/png');
+                        var link = document.createElement('a');
+                        link.download = 'qqshow_' + Date.now() + '.png';
+                        link.href = dataUrl;
+                        link.click();
+                    }
+                };
+                layerImg.src = img.src;
+            });
+        };
+        document.querySelectorAll('.tab-button').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab-button').forEach(function(t) { t.classList.remove('active'); });
+                tab.classList.add('active');
+                currentGender = tab.getAttribute('data-gender');
+                assetCache = {};
+                initSelections();
+                renderItems();
+                renderAvatar();
+            });
+        });
+        function startApp() {
+            buildTabs();
+            initSelections();
+            renderItems();
+            renderAvatar();
+        }
+        if (!isElectron) {
+            fetch('assets/manifest.json').then(function(r) { return r.json(); }).then(function(m) {
+                fileManifest = m;
+                startApp();
+            }).catch(function() { startApp(); });
+        } else {
+            startApp();
+        }
+    </script>
+</body>
+</html>

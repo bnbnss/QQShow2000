@@ -1,0 +1,12 @@
+*.obj
+*.pdb
+*.ilk
+QQShow2000.exe
+WebView2Loader.dll
+webview2/
+webview2.nupkg
+webview2.zip
+test.html
+package.json
+assets/screenshots/
+QQShow2000.exe.WebView2/
